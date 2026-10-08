@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>آراد CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--bg1:#fff;--glass:#fff;--sh:rgba(16,24,40,.14);--ink:#161a22;--mut:#6b7280;--acc:#2f5fd0;--acc2:#eaf0fd;--g1:#2f5fd0;--g2:#4b7bec;--ok:#157347;--ok2:#e7f4ec;--warn:#946200;--warn2:#fcf2d9;--bad:#c0392b;--bad2:#fbeae8;--in:#f3f4f6;--line:#e5e7eb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1013;--bg1:#171a20;--glass:#171a20;--sh:rgba(0,0,0,.5);--ink:#e8eaee;--mut:#8b93a3;--acc:#7b9cff;--acc2:rgba(123,156,255,.13);--g1:#7b9cff;--g2:#7b9cff;--ok:#4cc38a;--ok2:rgba(76,195,138,.13);--warn:#e5b84a;--warn2:rgba(229,184,74,.13);--bad:#ef7b6f;--bad2:rgba(239,123,111,.13);--in:#1e222a;--line:#272c35}}
+:root[data-theme="dark"]{--bg:#0e1013;--bg1:#171a20;--glass:#171a20;--sh:rgba(0,0,0,.5);--ink:#e8eaee;--mut:#8b93a3;--acc:#7b9cff;--acc2:rgba(123,156,255,.13);--g1:#7b9cff;--g2:#7b9cff;--ok:#4cc38a;--ok2:rgba(76,195,138,.13);--warn:#e5b84a;--warn2:rgba(229,184,74,.13);--bad:#ef7b6f;--bad2:rgba(239,123,111,.13);--in:#1e222a;--line:#272c35}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);background:var(--bg);font:400 14px/1.7 Vazirmatn,Tahoma,sans-serif}
+.app{display:grid;grid-template-columns:228px 1fr;gap:20px;padding:20px;max-width:1440px;margin:0 auto}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:14px}
+aside{padding:12px 10px;position:sticky;top:calc(20px + env(safe-area-inset-top,0px));align-self:start;max-height:calc(100vh - 40px);overflow:auto;display:flex;flex-direction:column;gap:1px}
+.brand{font-weight:700;font-size:16px;padding:6px 10px 14px;display:flex;align-items:center;gap:10px}
+.brand span{width:30px;height:30px;border-radius:9px;background:var(--acc);display:grid;place-items:center;color:#fff;font-size:15px}
+.brand small{display:block;font-weight:400;font-size:11px;color:var(--mut);line-height:1.3}
+.nb{display:flex;align-items:center;gap:10px;border:0;background:none;color:var(--mut);font:inherit;padding:7px 10px;border-radius:9px;cursor:pointer;text-align:start;width:100%}
+.nb svg{flex:none}.nb:hover{background:var(--in);color:var(--ink)}.nb.on{background:var(--acc2);color:var(--acc);font-weight:600}
+.nb i{font-style:normal;margin-inline-start:auto;background:var(--acc);color:#fff;border-radius:99px;padding:0 7px;font-size:11px}
+.sep{height:1px;background:var(--line);margin:6px 4px}
+.me{margin-top:auto;padding:10px 4px 2px}
+main{min-width:0}
+.hdr{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:18px;position:relative;z-index:6}
+.gs{position:relative;flex:1;max-width:400px}.gsr{position:absolute;top:110%;inset-inline:0;padding:6px;display:none;z-index:9;box-shadow:0 12px 30px var(--sh)}.gsr.on{display:block}
+.ph{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}.ph h1{font-size:20px;margin:0 0 0 auto;font-weight:700;margin-inline-end:auto}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{padding:18px}.fw{grid-column:1/-1}
+h2{font-size:14px;margin:0 0 12px;font-weight:600}
+.kpi{padding:14px 16px}button.kpi{text-align:start;font:inherit;color:inherit;cursor:pointer;display:block;width:100%}button.kpi.on{border-color:var(--acc);background:var(--acc2)}[hidden]{display:none!important}#selbar{background:var(--acc2);border-radius:10px;padding:6px 12px}.kpi .ico{display:none}.kpi b{display:block;font-size:21px;font-weight:700;line-height:1.4}.kpi span{color:var(--mut);font-size:12.5px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--glass);border:1px solid var(--line);border-radius:10px;padding:7px 11px;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--acc);outline:none;box-shadow:0 0 0 3px var(--acc2)}
+textarea{resize:vertical}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:10px;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--in)}
+.btn.p{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:500}.btn.p:hover{filter:brightness(1.08)}
+.btn.s{padding:3px 11px;font-size:13px}.btn.d{color:var(--bad)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.ib{border:0;background:none;color:var(--mut);width:30px;height:30px;border-radius:8px;cursor:pointer;display:inline-grid;place-items:center}
+.ib:hover{background:var(--in);color:var(--acc)}.ib.d:hover{background:var(--bad2);color:var(--bad)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}.row.e{justify-content:flex-end}.sp{margin-inline-start:auto}
+.li{display:flex;gap:12px;align-items:center;padding:11px 8px;border-bottom:1px solid var(--line)}
+.li:last-child{border:0}.li:hover{background:var(--in)}
+.li .m{flex:1;min-width:0}.li small,.mut{color:var(--mut)}.li .a{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.av{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--acc2);color:var(--acc);font-weight:700;flex:none;overflow:hidden}
+.av.ok{background:var(--ok2);color:var(--ok)}.av.b{background:var(--bad2);color:var(--bad)}.av.w{background:var(--warn2);color:var(--warn)}
+.av img{width:100%;height:100%;object-fit:cover}
+.chip{display:inline-block;border-radius:7px;padding:0 8px;font-size:12px;background:var(--acc2);color:var(--acc);white-space:nowrap}
+.chip.ok{background:var(--ok2);color:var(--ok)}.chip.w{background:var(--warn2);color:var(--warn)}.chip.b{background:var(--bad2);color:var(--bad)}.chip.m{background:var(--in);color:var(--mut)}
+.state{text-align:center;color:var(--mut);padding:34px 10px}.state.err{color:var(--bad)}
+.sk{height:52px;border-radius:10px;margin:8px 0;background:linear-gradient(90deg,var(--in),var(--bg),var(--in));background-size:200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.tb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tb>*{width:auto;min-width:125px}.tb .q{flex:1;min-width:200px}
+.pgn{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px}
+.bars{display:flex;gap:10px;align-items:flex-end;height:170px;padding-top:10px}.bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;font-size:11px;color:var(--mut)}
+.bars i{width:100%;max-width:44px;border-radius:6px 6px 2px 2px;background:var(--acc);opacity:.85;min-height:3px}
+.hb{display:flex;gap:10px;align-items:center;margin:8px 0}.hb span{width:120px;font-size:13px}.hb .t{flex:1;height:7px;border-radius:9px;background:var(--in);overflow:hidden}.hb .t i{display:block;height:100%;background:var(--acc);border-radius:9px}
+.tl{border-inline-start:1px solid var(--line);margin-inline-start:6px;padding-inline-start:16px}.tl>div{position:relative;padding-bottom:12px}.tl>div::before{content:"";position:absolute;inset-inline-start:-20px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.tabs{display:flex;gap:2px;overflow-x:auto;margin:12px 0;border-bottom:1px solid var(--line)}.tabs button{border:0;border-bottom:2px solid transparent;background:none;color:var(--mut);font:inherit;padding:7px 12px;cursor:pointer;white-space:nowrap}.tabs button.on{color:var(--acc);border-color:var(--acc);font-weight:600}
+.tbl{width:100%;border-collapse:collapse}.tbl th,.tbl td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:start;font-size:13px}.tbl th{color:var(--mut);font-weight:500}
+#bd{position:fixed;inset:0;background:rgba(10,12,18,.4);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}#bd.on{opacity:1;pointer-events:auto}
+#drw{position:fixed;top:0;bottom:0;left:0;width:min(640px,100vw);transform:translateX(-104%);transition:transform .25s ease;z-index:41;overflow:auto;padding:20px;border-radius:0 16px 16px 0;background:var(--bg)}#drw.on{transform:none}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--bg1);color:var(--ink);width:min(580px,94vw);max-height:92vh;padding:20px;font:inherit}
+dialog[open]{animation:pop .18s ease}@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+dialog::backdrop{background:rgba(10,12,18,.45)}
+dialog h3{margin:0 0 10px;font-size:17px}.mb{max-height:64vh;overflow:auto;padding:2px}
+label.f{display:block;margin:10px 0 3px;color:var(--mut);font-size:12.5px}
+.chk{display:flex;gap:8px;align-items:center}.chk input{width:auto}
+.dp{position:relative}.dp input{cursor:pointer;padding-inline-end:30px}.dp .x{position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--mut);cursor:pointer;font-size:16px}
+.pop{position:fixed;z-index:100;width:288px;padding:12px;background:var(--bg1);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px var(--sh)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}.cal b{font-size:11px;color:var(--mut);font-weight:500}.cal button{border:0;background:none;color:var(--ink);font:inherit;padding:5px 0;border-radius:8px;cursor:pointer}.cal button:hover{background:var(--in)}.cal .sel{background:var(--acc);color:#fff}.cal .tod{outline:1px solid var(--acc)}
+.thumb{width:64px;height:64px;border-radius:10px;object-fit:cover;margin-top:6px}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(10px);padding:9px 20px;border-radius:10px;opacity:0;transition:.2s;pointer-events:none;z-index:200;background:var(--ink);color:var(--bg1)}#toast.on{opacity:1;transform:translateX(-50%)}
+@media(max-width:960px){.app{grid-template-columns:1fr;padding:10px}aside{position:static;flex-direction:row;overflow-x:auto;padding:6px;max-height:none}.brand,.me,.sep{display:none}.nb{width:auto;white-space:nowrap}.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}.li{flex-wrap:wrap}}
+@media print{aside,.hdr,#drw,#bd,#toast,.noprint,.ph,.mb~.row{display:none!important}main{display:none}dialog[open]{position:static;width:100%;max-height:none;border:0}body{background:#fff}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app"><aside class="glass" id="nav"></aside><div><div class="glass hdr" id="hdr"></div><main id="main"></main></div></div>
+<div id="bd"></div><div id="drw" class="glass"></div>
+<dialog id="dlg"></dialog><dialog id="cfm"></dialog><div id="toast" role="status"></div>
+<script>
+/* =====================================================================
+ UI → Service → dataProvider → LocalStorageProvider | ApiProvider
+ فقط StorageAdapter به localStorage دست می‌زند. اتصال بک‌اند: تنظیمات ← حالت «سرور» + apiBaseUrl
+ قرارداد: GET /{entity}?search&page&limit&sortBy&sortOrder&filters=JSON  |  GET/PUT/DELETE /{entity}/:id  |  POST /{entity}
+ پاسخ: {success,data,message,meta}   |   POST /messages/send   |   POST /ai/compose
+ ===================================================================== */
+const $=s=>document.querySelector(s);
+const uuid=()=>crypto.randomUUID?crypto.randomUUID():'id-'+Math.random().toString(36).slice(2)+Date.now().toString(36);
+const now=()=>new Date().toISOString();
+const ok=(data,meta=null)=>({success:true,data,message:null,meta}),fail=message=>({success:false,data:null,message});
+const norm=s=>String(s??'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+const ENT=['customers','products','calls','followups','messages','requests','activities','users','templates','invoices','stockmoves'];
+
+/* ---------- ذخیره‌سازی و تنظیمات ---------- */
+const StorageAdapter={mem:{},cache:{},dirty:new Set(),timer:null,
+  get(k,d=[]){if(k in this.cache)return this.cache[k];let r=d;try{const v=localStorage.getItem('arad_'+k);if(v)r=JSON.parse(v)}catch(e){r=this.mem[k]??d}this.cache[k]=r;return r},
+  save(k,v){this.cache[k]=v;this.dirty.add(k);if(!this.timer)this.timer=setTimeout(()=>this.flush(),60)},
+  flush(){clearTimeout(this.timer);this.timer=null;for(const k of this.dirty){try{localStorage.setItem('arad_'+k,JSON.stringify(this.cache[k]))}catch(e){this.mem[k]=this.cache[k];if(!this.warned){this.warned=1;toast('ذخیره‌سازی مرورگر در دسترس یا کافی نیست؛ داده‌ها فقط تا بستن صفحه می‌مانند.')}}}this.dirty.clear()}};
+addEventListener('beforeunload',()=>StorageAdapter.flush());addEventListener('storage',e=>{if(e.key&&e.key.startsWith('arad_'))delete StorageAdapter.cache[e.key.slice(5)]});
+const DEFAULTS={mode:'local',apiBaseUrl:'',timeout:10000,token:'',company:'آراد',phone:'',payInfo:'',taxRate:0,theme:'auto',meId:'',deepLinks:{eitaa:'',rubika:''},
+  reminder:{enabled:false,channel:'sms',everyDays:7,minAmount:0,minAge:0,hFrom:8,hTo:20,templateId:'',body:'سلام {name} عزیز، وقت بخیر. طبق حساب ما مبلغ {balance} از شما معوق است ({days} روز). لطفاً در اولین فرصت جهت تسویه اقدام فرمایید.\n{payinfo}\n{company}'}};
+const Settings={get(){const st=StorageAdapter.get('settings',{});return{...DEFAULTS,...st,deepLinks:{...DEFAULTS.deepLinks,...st.deepLinks},reminder:{...DEFAULTS.reminder,...st.reminder}}},save:s=>StorageAdapter.save('settings',s)};
+
+/* ---------- Providerها ---------- */
+const SEARCH={customers:['firstName','lastName','companyName','phone','city','notes'],products:['name','code','category','description'],calls:['summary','outcome'],followups:['title','description','result'],messages:['body'],requests:['note'],activities:['title'],users:['name'],templates:['title','body','category'],invoices:['no','finalNo','note'],stockmoves:['note']};
+const OPS={gt:(a,x)=>a>x,gte:(a,x)=>a>=x,lt:(a,x)=>a<x,lte:(a,x)=>a<=x,ne:(a,x)=>x===null?a!=null:a!==x,eq:(a,x)=>x===null?a==null:a===x,has:(a,x)=>Array.isArray(a)&&a.includes(x)};
+const cmp=(r,k,v)=>v&&typeof v==='object'?Object.entries(v).every(([o,x])=>!!OPS[o]&&OPS[o](r[k],x)):r[k]===v;
+const LocalStorageProvider={
+  async get(e,p={}){try{const{search,filters={},sortBy='createdAt',sortOrder='desc',page=1,limit=0}=p;let rows=StorageAdapter.get(e).filter(r=>!r.deletedAt);
+    if(search){const q=norm(search).toLowerCase();rows=rows.filter(r=>(SEARCH[e]||[]).some(f=>norm(r[f]).toLowerCase().includes(q)))}
+    rows=rows.filter(r=>Object.entries(filters).every(([k,v])=>v==null||v===''||cmp(r,k,v)));
+    rows.sort((a,b)=>(a[sortBy]>b[sortBy]?1:a[sortBy]<b[sortBy]?-1:0)*(sortOrder==='asc'?1:-1));
+    const total=rows.length;if(limit)rows=rows.slice((page-1)*limit,page*limit);return ok(rows,{total,page,limit})}catch(x){return fail('خطا در دریافت اطلاعات')}},
+  async getById(e,id){const r=StorageAdapter.get(e).find(x=>x.id===id&&!x.deletedAt);return r?ok(r):fail('رکورد پیدا نشد')},
+  async create(e,d){try{const rows=StorageAdapter.get(e),r={...d,id:uuid(),createdAt:d.createdAt||now(),updatedAt:now(),deletedAt:null};rows.push(r);StorageAdapter.save(e,rows);return ok(r)}catch(x){return fail('خطا در ثبت اطلاعات')}},
+  async update(e,id,d){const rows=StorageAdapter.get(e),i=rows.findIndex(x=>x.id===id);if(i<0)return fail('رکورد پیدا نشد');rows[i]={...rows[i],...d,id,updatedAt:now()};StorageAdapter.save(e,rows);return ok(rows[i])},
+  async delete(e,id){StorageAdapter.save(e,StorageAdapter.get(e).filter(x=>x.id!==id));return ok(true)}, // Soft Delete: به‌جای حذف، deletedAt را ست کنید
+  async action(){return ok({local:true})}};
+const ApiProvider={
+  async req(m,path,body){const s=Settings.get(),c=new AbortController(),t=setTimeout(()=>c.abort(),s.timeout);
+    try{const r=await fetch(s.apiBaseUrl+path,{method:m,signal:c.signal,headers:{'Content-Type':'application/json',...(s.token?{Authorization:'Bearer '+s.token}:{})},body:body?JSON.stringify(body):undefined});const j=r.status===204?{}:await r.json();if(!r.ok)return fail(j.message||'خطای سرور ('+r.status+')');return j.success!==undefined?j:ok(j)}
+    catch(x){return fail(x.name==='AbortError'?'پاسخی از سرور دریافت نشد':'ارتباط با سرور برقرار نشد')}finally{clearTimeout(t)}},
+  get(e,p={}){const q=new URLSearchParams();for(const k of['search','page','limit','sortBy','sortOrder'])if(p[k])q.set(k,p[k]);if(p.filters&&Object.keys(p.filters).length)q.set('filters',JSON.stringify(p.filters));return this.req('GET','/'+e+'?'+q)},
+  getById(e,id){return this.req('GET','/'+e+'/'+id)},create(e,d){return this.req('POST','/'+e,d)},update(e,id,d){return this.req('PUT','/'+e+'/'+id,d)},delete(e,id){return this.req('DELETE','/'+e+'/'+id)},action(p,b){return this.req('POST',p,b)}};
+const dataProvider=new Proxy({},{get:(_,k)=>(Settings.get().mode==='api'?ApiProvider:LocalStorageProvider)[k]});
+
+/* ---------- Serviceها ---------- */
+const svc=(e,x={})=>({getAll:p=>dataProvider.get(e,p),getById:id=>dataProvider.getById(e,id),create:d=>dataProvider.create(e,d),update:(id,d)=>dataProvider.update(e,id,d),delete:id=>dataProvider.delete(e,id),search:q=>dataProvider.get(e,typeof q==='string'?{search:q}:q),...x});
+const ProductService=svc('products'),CallService=svc('calls'),UserService=svc('users'),TemplateService=svc('templates'),MessageService0=svc('messages');
+const CustomerService=svc('customers',{async deleteCascade(id){const r=await dataProvider.delete('customers',id);for(const e of['calls','followups','messages','requests','activities','invoices']){const l=await dataProvider.get(e,{filters:{customerId:id}});for(const x of l.data||[])await dataProvider.delete(e,x.id)}return r}});
+const FollowUpService=svc('followups',{complete:(id,result)=>dataProvider.update('followups',id,{status:'done',result,completedAt:now()}),reschedule:(id,dueAt)=>dataProvider.update('followups',id,{dueAt,status:'open'})});
+const RequestService=svc('requests',{changeStatus:(id,status)=>dataProvider.update('requests',id,{status})});
+const ActivityService=svc('activities',{getByCustomerId:(customerId,p={})=>dataProvider.get('activities',{...p,filters:{customerId}})});
+const InvoiceService=svc('invoices'),StockMoveService=svc('stockmoves');
+const SV={customers:CustomerService,products:ProductService,calls:CallService,followups:FollowUpService,messages:MessageService0,requests:RequestService,activities:ActivityService,users:UserService,templates:TemplateService,invoices:InvoiceService,stockmoves:StockMoveService};
+const NotificationService={getDue:()=>FollowUpService.getAll({filters:{status:'open',dueAt:{lte:eod()}}})};
+const AccountingService={getBalance:async id=>{const r=await CustomerService.getById(id);return r.success?ok({balance:r.data.balance}):r}}; // نقطه‌ی اتصال محک
+const log=(customerId,type,title)=>ActivityService.create({customerId,type,title});
+
+/* ---------- احراز هویت و دسترسی ---------- */
+const AuthService={get user(){return StorageAdapter.get('users').find(u=>u.id===Settings.get().meId)||{id:'demo',name:'مدیر',role:'admin'}}};
+const DENY=['users.edit','users.delete','customers.delete','products.delete','settings.edit','templates.delete'];
+const can=p=>{const r=AuthService.user.role;return r==='admin'||(r==='viewer'?p.endsWith('.view'):!DENY.includes(p))};
+
+/* ---------- AI و کانال‌های پیام ---------- */
+const AIService={async compose(c,items,tone){if(Settings.get().mode==='api'){const r=await dataProvider.action('/ai/compose',{customer:c,products:items,tone});if(r.success&&r.data?.text)return r}return ok({text:composeLocal(c,items,tone)})}};
+const fillU=(t,to,text)=>t.replace('{phone}',encodeURIComponent(to)).replace('{text}',encodeURIComponent(text));
+const copy=async t=>{try{await navigator.clipboard.writeText(t)}catch(e){}};
+const Channels={ // کانال جدید = یک آیتم جدید
+  sms:{label:'پیامک',async local(to,text){const a=document.createElement('a');a.href='sms:'+to+'?body='+encodeURIComponent(text);a.click();return 'برنامه‌ی پیامک باز شد'}},
+  eitaa:{label:'ایتا',async local(to,text){const t=Settings.get().deepLinks.eitaa;if(t){window.open(fillU(t,to,text),'_blank');return 'ایتا باز شد'}await copy(text);window.open('https://web.eitaa.com','_blank');return 'متن کپی شد؛ در ایتا بچسبانید'}},
+  rubika:{label:'روبیکا',async local(to,text){const t=Settings.get().deepLinks.rubika;if(t){window.open(fillU(t,to,text),'_blank');return 'روبیکا باز شد'}await copy(text);window.open('https://web.rubika.ir','_blank');return 'متن کپی شد؛ در روبیکا بچسبانید'}}};
+const MessageService={...MessageService0,async send({customerId,phone,channel,body,productIds=[],silent}){
+  if(!can('message.send'))return fail('دسترسی ندارید');const ch=Channels[channel];if(!ch)return fail('کانال نامعتبر');let info,status='sent';
+  if(Settings.get().mode==='api'){const r=await dataProvider.action('/messages/send',{channel,to:phone,text:body,customerId});if(!r.success)return r;info='از طریق سرور ارسال شد'}
+  else{info=silent?'':await ch.local(phone,body);status='handoff'}
+  const m=await MessageService0.create({customerId,channel,body,productIds,status});await log(customerId,'message','ارسال '+ch.label+': '+short(body));return ok(m.data,{info})}};
+const tpl=(t,c)=>{const s=Settings.get();return t.replace(/\{name\}/g,c?name(c):'').replace(/\{company\}/g,s.company).replace(/\{balance\}/g,c?money(c.balance):'').replace(/\{phone\}/g,s.phone).replace(/\{payinfo\}/g,s.payInfo||'').replace(/\{days\}/g,c?.debtSince?Math.floor((Date.now()-new Date(c.debtSince))/864e5).toLocaleString('fa-IR'):'—')};
+function composeLocal(c,items,tone){const h=new Date().getHours(),g=h<12?'صبح بخیر':h<17?'وقت بخیر':'عصر بخیر',n=c?' '+(c.firstName||c.companyName||''):'',P=a=>a[Math.floor(Math.random()*a.length)];
+  const intro=tone==='formal'?`${g}${n} گرامی، با تشکر از تماس شما، فهرست قیمت درخواستی تقدیم می‌شود:`:P([`${g}${n} عزیز، ممنون از تماستون.`,`سلام${n} عزیز، ${g}. طبق صحبت‌مون قیمت‌ها رو براتون نوشتم:`,`${g}${n} جان، مرسی که تماس گرفتید.`]);
+  const lines=items.map(p=>`• ${p.name}${p.qty>1?' × '+p.qty.toLocaleString('fa-IR'):''}${p.unit?' ('+p.unit+')':''}: ${money(p.price)}${p.description?' — '+short(p.description):''}`);
+  const out=tone==='formal'?'در صورت نیاز به ثبت سفارش، در خدمت شما هستیم.':P(['اگه سوالی بود یا خواستید سفارش بدید، در خدمتم.','هر وقت تصمیم گرفتید خبر بدید تا سفارش رو ثبت کنم.']);
+  const s=Settings.get();return [intro,lines.join('\n'),out,[s.company,s.phone].filter(Boolean).join(' | ')].filter(Boolean).join('\n\n')}
+
+/* ---------- منطق کسب‌وکار ---------- */
+const sum=items=>(items||[]).reduce((s,i)=>s+i.price*i.qty,0);
+const CallWorkflow={
+  async registerCall({customer,items,channels,summary,outcome,status,next,assignee}){
+    const c=await CallService.create({customerId:customer.id,kind:'sales',direction:'in',summary,outcome,channels});if(!c.success)return c;
+    if(items.length){await RequestService.create({customerId:customer.id,items,productIds:items.map(i=>i.productId),amount:sum(items),status,note:summary,date:now()});await log(customer.id,status==='ordered'?'order':'request',(status==='ordered'?'ثبت سفارش: ':'درخواست قیمت: ')+items.map(i=>i.name).join('، '))}
+    if(next)await FollowUpService.create({customerId:customer.id,type:'sales',title:'پیگیری فروش',description:summary,dueAt:next,assignee,status:'open',result:null,completedAt:null});
+    await log(customer.id,'call','تماس: '+summary);return c},
+  async registerDebtContact({customer,summary,outcome,newBalance,next,followUpId,assignee}){
+    const c=await CallService.create({customerId:customer.id,kind:'debt',direction:'out',summary,outcome});if(!c.success)return c;
+    if(followUpId)await FollowUpService.complete(followUpId,summary);
+    if(newBalance!==customer.balance)await CustomerService.update(customer.id,{balance:newBalance});
+    if(next)await FollowUpService.create({customerId:customer.id,type:'debt',title:'پیگیری تسویه حساب',description:summary,dueAt:next,assignee,status:'open',result:null,completedAt:null});
+    await log(customer.id,'debt','تماس تسویه ('+outcome+'): '+summary);return c}};
+function behavior(invs){const pu=invs.filter(i=>['final','delivered'].includes(i.status)).sort((a,b)=>a.finalAt>b.finalAt?1:-1),cnt={};
+  const gaps=pu.slice(1).map((r,i)=>(new Date(r.finalAt)-new Date(pu[i].finalAt))/864e5),avg=gaps.length?Math.round(gaps.reduce((a,b)=>a+b,0)/gaps.length):null,last=pu.at(-1)?.finalAt;
+  pu.forEach(r=>r.items.forEach(i=>cnt[i.name]=(cnt[i.name]||0)+i.qty));
+  return{n:pu.length,total:pu.reduce((s,r)=>s+r.total,0),last,avg,since:last?Math.floor((Date.now()-new Date(last))/864e5):null,top:Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,4)}}
+
+/* ---------- انبار و فاکتور ---------- */
+const paidOf=i=>(i.payments||[]).reduce((s,p)=>s+p.amount,0);
+const payStateOf=(payments,total)=>{const p=(payments||[]).reduce((s,x)=>s+x.amount,0);return p<=0?'unpaid':p>=total?'paid':'partial'};
+const totals=d=>{d.subtotal=sum(d.items);d.discount=Math.min(d.discount||0,d.subtotal);d.tax=Math.round((d.subtotal-d.discount)*(Settings.get().taxRate||0)/100);d.total=d.subtotal-d.discount+d.tax;return d};
+const NEXT={proforma:['paid','final','canceled'],paid:['final','canceled'],final:['delivered','canceled'],delivered:['canceled'],canceled:[]};
+const isFinal=i=>['final','delivered'].includes(i.status);
+const StockService={async move(productId,delta,type,ref,note){const p=(await ProductService.getById(productId)).data;if(!p)return fail('کالا پیدا نشد');
+  const stock=(p.stock||0)+delta;await ProductService.update(productId,{stock,low:stock<=(p.minStock||0)});return StockMoveService.create({productId,qty:delta,type,ref:ref||null,note:note||''})}};
+async function recalcCustomer(id){const[r,c]=await Promise.all([InvoiceService.getAll({filters:{customerId:id}}),CustomerService.getById(id)]),f=(r.data||[]).filter(isFinal).sort((a,b)=>a.finalAt<b.finalAt?1:-1),cu=c.data||{},
+  owing=f.filter(i=>i.total>paidOf(i)).sort((a,b)=>a.finalAt>b.finalAt?1:-1);
+  return CustomerService.update(id,{ordersCount:f.length,totalPurchase:f.reduce((s,i)=>s+i.total,0),lastPurchaseAt:f[0]?.finalAt||null,debtSince:owing.length?owing[0].finalAt:(cu.balance>0?cu.debtSince||now():null)})}
+async function adjustBalance(id,delta){const c=(await CustomerService.getById(id)).data;if(c)await CustomerService.update(id,{balance:Math.max(0,(c.balance||0)+delta)})}
+const InvoiceWorkflow={
+  async create(d){if(!can('invoices.edit'))return fail('دسترسی ندارید');const all=(await InvoiceService.getAll()).data||[],n=Math.max(1000,...all.map(i=>+String(i.no).replace(/\D/g,'')))+1;totals(d);
+    const r=await InvoiceService.create({...d,no:'PF-'+n,finalNo:null,status:'proforma',payments:[],payState:'unpaid',issuedAt:d.issuedAt||now(),finalAt:null,sentAt:null});
+    if(r.success)await log(d.customerId,'invoice','پیش‌فاکتور '+r.data.no+' صادر شد — '+money(r.data.total));return r},
+  async addPayment(id,amount,method){if(!can('invoices.edit'))return fail('دسترسی ندارید');const inv=(await InvoiceService.getById(id)).data;if(!inv)return fail('فاکتور پیدا نشد');if(inv.status==='canceled')return fail('فاکتور لغو شده است');
+    const eff=Math.min(amount,Math.max(0,inv.total-paidOf(inv)));if(eff<=0)return fail('این فاکتور قبلاً تسویه شده است');
+    const payments=[...(inv.payments||[]),{id:uuid(),amount:eff,method:method||'واریز',at:now()}],patch={payments,payState:payStateOf(payments,inv.total)};
+    if(inv.status==='proforma'&&patch.payState==='paid')patch.status='paid';
+    const r=await InvoiceService.update(id,patch);if(isFinal(inv)){await adjustBalance(inv.customerId,-eff);await recalcCustomer(inv.customerId)}
+    await log(inv.customerId,'payment','واریز '+money(eff)+' برای '+(inv.finalNo||inv.no));return r},
+  async setStatus(id,to){if(!can('invoices.edit'))return fail('دسترسی ندارید');const inv=(await InvoiceService.getById(id)).data;if(!inv)return fail('فاکتور پیدا نشد');
+    if(!NEXT[inv.status].includes(to))return fail('تغییر از «'+LBL.is[inv.status]+'» به «'+LBL.is[to]+'» ممکن نیست');
+    const out=Math.max(0,inv.total-paidOf(inv)),patch={status:to};
+    if(to==='paid'){if(out>0){const r=await this.addPayment(id,out,'ثبت دستی');if(!r.success)return r}return InvoiceService.getById(id)}
+    if(to==='final'){const ps=(await ProductService.getAll()).data||[],lack=inv.items.filter(i=>{const p=ps.find(x=>x.id===i.productId);return p&&(p.stock||0)<i.qty}).map(i=>i.name);
+      if(lack.length)return fail('موجودی انبار کافی نیست: '+lack.join('، '));
+      for(const i of inv.items)await StockService.move(i.productId,-i.qty,'out',inv.id,'فروش '+inv.no);
+      await adjustBalance(inv.customerId,out);patch.finalNo=inv.finalNo||'INV-'+String(inv.no).replace(/\D/g,'');patch.finalAt=now()}
+    if(to==='canceled'&&isFinal(inv)){for(const i of inv.items)await StockService.move(i.productId,i.qty,'in',inv.id,'لغو '+(inv.finalNo||inv.no));await adjustBalance(inv.customerId,-out)}
+    const r=await InvoiceService.update(id,patch);if(to==='final'||to==='canceled'||to==='delivered')await recalcCustomer(inv.customerId);
+    await log(inv.customerId,'invoice','وضعیت '+(inv.finalNo||patch.finalNo||inv.no)+': '+LBL.is[to]);return r},
+  async send(id,channel){const inv=(await InvoiceService.getById(id)).data,c=(await CustomerService.getById(inv.customerId)).data;
+    const r=await MessageService.send({customerId:c.id,phone:c.phone,channel,body:invoiceText(inv,c),productIds:inv.productIds});if(r.success)await InvoiceService.update(id,{sentAt:now()});return r}};
+function invoiceText(i,c){const s=Settings.get(),fin=isFinal(i),out=Math.max(0,i.total-paidOf(i)),p=paidOf(i);
+  const lines=i.items.map(x=>`• ${x.name} × ${x.qty.toLocaleString('fa-IR')} — ${money(x.price*x.qty)}`).join('\n');
+  const sm=`جمع کالاها: ${money(i.subtotal)}`+(i.discount?`\nتخفیف: ${money(i.discount)}`:'')+(i.tax?`\nمالیات: ${money(i.tax)}`:'')+`\nمبلغ کل: ${money(i.total)}`+(p?`\nپرداخت‌شده: ${money(p)}`:'')+(out?`\nمانده قابل پرداخت: ${money(out)}`+(i.dueAt?`\nسررسید پرداخت: ${jd(i.dueAt)}`:''):'\nوضعیت: تسویه شده');
+  return [(fin?'فاکتور نهایی ':'پیش‌فاکتور ')+(fin?i.finalNo:i.no)+' | '+s.company,`${name(c)} عزیز، سلام.`,lines,sm,!fin&&out&&s.payInfo?'اطلاعات پرداخت:\n'+s.payInfo:'',s.phone?'تماس: '+s.phone:''].filter(Boolean).join('\n\n')}
+
+/* ---------- سن بدهی و یادآوری خودکار ---------- */
+const DEBTCAT=[['','بدون دسته'],['عادی','عادی'],['پیگیری فوری','پیگیری فوری'],['قول پرداخت','قول پرداخت'],['پیگیری حقوقی','پیگیری حقوقی'],['بدحساب','بدحساب']];
+const AG=[['a','تا ۳۰ روز',0,30],['b','۳۱ تا ۶۰ روز',31,60],['c','۶۱ تا ۹۰ روز',61,90],['d','بیش از ۹۰ روز',91,36500]];
+const ageDays=c=>c.debtSince?Math.max(0,Math.floor((Date.now()-new Date(c.debtSince))/864e5)):null;
+const AGU=['u','بدون تاریخ بدهی',0,0];
+const ageBucket=c=>{if(!(c.balance>0))return null;const d=ageDays(c);return d==null?AGU:AG.find(g=>d>=g[2]&&d<=g[3])};
+const chOpts=()=>Object.entries(Channels).map(([k,v])=>[k,v.label]);
+const ReminderService={
+  cfg:()=>Settings.get().reminder,
+  async templateBody(){const c=this.cfg(),t=c.templateId?(await TemplateService.getById(c.templateId)).data:null;return t?t.body:c.body},
+  inHours(){const h=new Date().getHours(),c=this.cfg();return h>=c.hFrom&&h<c.hTo},
+  async due(){const c=this.cfg(),r=await CustomerService.getAll({filters:{balance:c.minAmount>0?{gte:c.minAmount}:{gt:0}},sortBy:'balance'});
+    return(r.data||[]).filter(x=>x.status!=='inactive'&&x.phone&&(ageDays(x)??0)>=c.minAge&&(!x.lastReminderAt||Date.now()-new Date(x.lastReminderAt)>=c.everyDays*864e5))},
+  async send(cu,channel,text,silent){const r=await MessageService.send({customerId:cu.id,phone:cu.phone,channel,body:text,silent});
+    if(r.success){await CustomerService.update(cu.id,{lastReminderAt:now(),reminderCount:(cu.reminderCount||0)+1});await log(cu.id,'debt','یادآوری بدهی ارسال شد ('+Channels[channel].label+')')}return r},
+  async tick(){const c=this.cfg();if(!c.enabled||this.busy)return;const d=await this.due();if(!d.length||!this.inHours())return;
+    if(Settings.get().mode==='api'){this.busy=1;let n=0;const body=await this.templateBody();for(const x of d)if((await this.send(x,c.channel,tpl(body,x),true)).success)n++;this.busy=0;if(n){toast(n.toLocaleString('fa-IR')+' یادآوری بدهی به‌صورت خودکار ارسال شد');drawNav();if(page==='debtors')go()}}
+    else if(!this.told){this.told=1;toast(d.length.toLocaleString('fa-IR')+' یادآوری بدهی آماده‌ی ارسال است؛ از کارتابل بدهکاران ارسال کنید.')}}};
+function sendQueue(list,channel,body,send,label,after){let i=0,sent=0;
+  const step=()=>{if(i>=list.length){$('#dlg').close();toast(sent.toLocaleString('fa-IR')+' پیام ارسال شد');if(sent&&after)after();else if(!after)refresh();return}
+    const cu=list[i],d=ageDays(cu);
+    modal(`${label} ${(i+1).toLocaleString('fa-IR')} از ${list.length.toLocaleString('fa-IR')}`,`<div class="li">${av(name(cu))}<div class="m"><b>${esc(name(cu))}</b> <small dir="ltr">${esc(cu.phone)}</small>${cu.balance>0?`<br>${chip(money(cu.balance),'b')} ${d!=null?chip(d.toLocaleString('fa-IR')+' روز','m'):''}`:''}</div></div>${F('پیام‌رسان',`<select id="q_ch">${chOpts().map(([k,l])=>`<option value="${k}" ${k===channel?'selected':''}>${l}</option>`).join('')}</select>`)}${F('متن پیام',`<textarea id="q_body" rows="7">${esc(tpl(body,cu))}</textarea>`)}<div class="row"><button class="btn" id="q_skip">رد کردن این مشتری</button></div>`,async()=>{
+      channel=$('#q_ch').value;const r=await send(cu,channel,$('#q_body').value,false);if(!r.success){toast(r.message);return false}sent++;i++;setTimeout(step,0);return false},'ارسال و بعدی');
+    $('#q_skip').onclick=()=>{i++;step()}};step()}
+const remindQueue=(list,channel,body)=>sendQueue(list,channel,body,(cu,c,t)=>ReminderService.send(cu,c,t,false),'یادآوری');
+
+/* ---------- تاریخ شمسی (بر پایه Intl) ---------- */
+const PF=new Intl.DateTimeFormat('en-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric',timeZone:'UTC'});
+const g2j=d=>{const p={};PF.formatToParts(d).forEach(x=>p[x.type]=+x.value);return[p.year||p.relatedYear,p.month,p.day]};
+function j2g(jy,jm,jd){const d=new Date(Date.UTC(jy+621,2,21,12));d.setUTCDate(d.getUTCDate()+(jm<=6?(jm-1)*31:186+(jm-7)*30)+jd-1);
+  for(let i=0;i<12;i++){const[a,b,c]=g2j(d),df=(a-jy)*365+(b-jm)*30.5+(c-jd);if(a===jy&&b===jm&&c===jd)return d;d.setUTCDate(d.getUTCDate()-(Math.round(df)||Math.sign(df)||1))}return d}
+const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const pad=n=>String(n).padStart(2,'0'),ymd=v=>{const d=new Date(v);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const ymdU=d=>d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate());
+const jd=(i,t)=>i?new Date(i).toLocaleDateString('fa-IR',t?{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}:{year:'numeric',month:'long',day:'numeric'}):'';
+const jdY=y=>jd(y+'T12:00:00');
+const eod=()=>{const d=new Date();d.setHours(23,59,59,999);return d.toISOString()},sod=()=>{const d=new Date();d.setHours(0,0,0,0);return d.toISOString()};
+const DP=(id,v,time,tv)=>`<div class="dp"><input id="${id}" readonly data-jdp="1" data-iso="${v||''}" value="${v?jdY(v):''}" placeholder="انتخاب تاریخ شمسی" aria-label="تاریخ"><button type="button" class="x" data-a="dpx" aria-label="پاک کردن">×</button></div>${time?`<input type="time" id="${id}_t" value="${tv||'09:00'}" style="margin-top:6px" aria-label="ساعت">`:''}`;
+function calHTML(jy,jm,sel){const d1=j2g(jy,jm,1),wd=(d1.getUTCDay()+1)%7,nx=jm===12?j2g(jy+1,1,1):j2g(jy,jm+1,1),len=Math.round((nx-d1)/864e5),td=ymd(new Date());
+  return `<div class="row" style="justify-content:space-between;margin-top:0"><button type="button" class="ib" data-a="dpn" data-id="1">›</button><b>${MN[jm-1]} ${jy.toLocaleString('fa-IR',{useGrouping:false})}</b><button type="button" class="ib" data-a="dpn" data-id="-1">‹</button></div><div class="cal">${['ش','ی','د','س','چ','پ','ج'].map(x=>`<b>${x}</b>`).join('')}${'<span></span>'.repeat(wd)}${Array.from({length:len},(_,i)=>{const g=ymdU(j2g(jy,jm,i+1));return`<button type="button" data-a="dpd" data-id="${g}" class="${g===sel?'sel':g===td?'tod':''}">${(i+1).toLocaleString('fa-IR')}</button>`}).join('')}</div><div class="row e"><button type="button" class="btn s" data-a="dpd" data-id="${td}">امروز</button></div>`}
+function openDP(inp){closeDP();const w=inp.closest('.dp'),s=inp.dataset.iso,[jy,jm]=g2j(s?new Date(s+'T12:00:00Z'):new Date()),p=document.createElement('div');
+  p.className='pop';p.dataset.jy=jy;p.dataset.jm=jm;p.innerHTML=calHTML(jy,jm,s);w.appendChild(p);const r=inp.getBoundingClientRect();
+  p.style.top=Math.max(8,Math.min(r.bottom+6,innerHeight-p.offsetHeight-8))+'px';p.style.left=Math.max(8,Math.min(r.left,innerWidth-300))+'px'}
+const closeDP=()=>document.querySelectorAll('.pop').forEach(p=>p.remove());
+function dpSet(inp,v){inp.dataset.iso=v||'';inp.value=v?jdY(v):'';inp.dispatchEvent(new Event('change',{bubbles:true}))}
+const dtVal=(id,time)=>{const v=$('#'+id).dataset.iso;return v?new Date(v+'T'+(time?($('#'+id+'_t').value||'09:00'):'12:00')+':00').toISOString():null};
+
+/* ---------- ابزارهای UI ---------- */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>(+n||0).toLocaleString('fa-IR')+' تومان';
+const cpt=n=>new Intl.NumberFormat('fa-IR',{notation:'compact'}).format(n||0);
+const short=t=>{t=(t||'').split(/[.\n]/)[0].trim();return t.length>70?t.slice(0,68)+'…':t};
+const name=c=>c?(c.companyName||[c.firstName,c.lastName].filter(Boolean).join(' ')||'—'):'—';
+const num=s=>+norm(s).replace(/[,٬\s]/g,'')||0;
+const normPhone=p=>{let d=norm(p).replace(/\D/g,'');if(d.startsWith('0098'))d=d.slice(4);else if(d.startsWith('98')&&d.length>=12)d=d.slice(2);if(/^9\d{9}$/.test(d))d='0'+d;return d};
+const F=(l,h)=>`<label class="f">${l}</label>${h}`;
+const ic=p=>`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const I={edit:ic('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>'),del:ic('<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/>'),eye:ic('<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>'),plus:ic('<path d="M12 5v14M5 12h14"/>'),ok:ic('<path d="M20 6L9 17l-5-5"/>'),msg:ic('<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>')};
+const chip=(t,c='')=>`<span class="chip ${c}">${esc(t)}</span>`;
+const av=(n,img)=>`<div class="av">${img?`<img src="${esc(img)}" alt="">`:esc((n||'?').trim()[0]||'?')}</div>`;
+const LBL={ft:{sales:'فروش',debt:'تسویه',call:'تماس مجدد',price:'ارسال قیمت',order:'پیگیری سفارش',payment:'پیگیری پرداخت',other:'سایر'},rs:{new:'جدید',priced:'قیمت داده شد',ordered:'سفارش ثبت شد',delivered:'تحویل شد',canceled:'لغو شد'},ms:{sent:'ارسال شد',handoff:'تحویل به پیام‌رسان',failed:'ناموفق'},role:{admin:'مدیر',sales:'کارشناس فروش',viewer:'فقط مشاهده'},kind:{sales:'فروش',debt:'تسویه',other:'سایر'},at:{},
+  is:{proforma:'پیش‌فاکتور',paid:'واریز شد',final:'فاکتور نهایی',delivered:'تحویل شد',canceled:'لغو شده'},ps:{unpaid:'پرداخت نشده',partial:'پرداخت جزئی',paid:'تسویه'},sm:{in:'ورود کالا',out:'خروج',adjust:'اصلاح موجودی'},
+  ty:{call:'تماس',message:'پیام',followup:'پیگیری',debt:'تسویه',create:'ایجاد',request:'درخواست',order:'سفارش',invoice:'فاکتور',payment:'پرداخت'}};
+const ISC={proforma:'m',paid:'',final:'ok',delivered:'ok',canceled:'b'},PSC={unpaid:'b',partial:'w',paid:'ok'},PM=['کارت به کارت','حواله بانکی','نقدی','کارتخوان','چک'];
+const RSC={new:'m',priced:'',ordered:'ok',delivered:'ok',canceled:'b'};
+const GROUPS=['جدید','فعال','قدیمی','عمده','ویژه','بالقوه'];
+const opts=o=>Object.entries(o);
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2800)}
+function modal(title,body,onSave,label='ذخیره'){const d=$('#dlg');d.innerHTML=`<h3>${title}</h3><div class="mb">${body}</div><div class="row e"><button class="btn" id="mc">بستن</button>${onSave?`<button class="btn p" id="ms">${label}</button>`:''}</div>`;
+  const ms=$('#ms');$('#mc').onclick=()=>d.close();
+  if(ms)ms.onclick=async()=>{if(ms.disabled)return;ms.disabled=true;try{if(await onSave()!==false)d.close()}catch(e){console.error(e);toast('خطا: '+(e.message||e))}finally{ms.disabled=false}};
+  d.onkeydown=e=>{if(e.key==='Enter'&&e.target.tagName==='INPUT'&&!['checkbox','file'].includes(e.target.type)&&$('#ms')){e.preventDefault();$('#ms').click()}};
+  if(!d.open)d.showModal()}
+const ask=(msg,label='حذف')=>new Promise(res=>{const d=$('#cfm');d.innerHTML=`<h3>تأیید</h3><p>${msg}</p><div class="row e"><button class="btn" id="n">انصراف</button><button class="btn p" id="y" style="background:var(--bad)">${label}</button></div>`;d.onclose=()=>res(false);$('#n').onclick=()=>d.close();$('#y').onclick=()=>{d.onclose=null;d.close();res(true)};d.showModal()});
+async function load(el,fn,draw,empty){el.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div>';const r=await fn();if(!el.isConnected)return r;
+  if(!r.success){el.innerHTML=`<div class="state err">${esc(r.message||'دریافت اطلاعات با مشکل مواجه شد.')}<br><button class="btn s" data-a="retry">تلاش دوباره</button></div>`;return r}
+  if(Array.isArray(r.data)&&!r.data.length){el.innerHTML=`<div class="state">${empty}</div>`;return r}draw(r);return r}
+const check=async(r,m)=>{if(!r.success){toast(r.message);return false}if(m)toast(m);return true};
+const ph=(t,x='')=>`<div class="ph"><h1>${t}</h1>${x}</div>`;
+const acts=(e,id,x='')=>`<div class="a">${x}${can(e+'.edit')?`<button class="ib" title="ویرایش" data-a="ed" data-e="${e}" data-id="${id}">${I.edit}</button>`:''}${can(e+'.delete')?`<button class="ib d" title="حذف" data-a="rm" data-e="${e}" data-id="${id}">${I.del}</button>`:''}</div>`;
+async function lists(){const[cs,us,ps,ts]=await Promise.all([CustomerService.getAll(),UserService.getAll(),ProductService.getAll(),TemplateService.getAll()]);return{cs:cs.data||[],us:us.data||[],ps:ps.data||[],ts:ts.data||[]}}
+const mapOf=a=>new Map((a||[]).map(x=>[x.id,x]));
+const cn=(LK,id)=>name(LK.cs.get(id)),un=(LK,id)=>LK.us.get(id)?.name||'—';
+
+/* ---------- فرم‌ساز عمومی ---------- */
+function fld(f,v,L){const id='f_'+f.k;let h;const so=(arr)=>arr.map(o=>{const[a,b]=Array.isArray(o)?o:[o,o];return`<option value="${esc(a)}" ${String(v)===String(a)?'selected':''}>${esc(b)}</option>`}).join('');
+  switch(f.t){
+    case'area':h=`<textarea id="${id}" rows="${f.rows||3}" placeholder="${esc(f.ph||'')}">${esc(v)}</textarea>`;break;
+    case'sel':h=`<select id="${id}">${so(f.opts)}</select>`;break;
+    case'cust':h=`<select id="${id}"><option value="">انتخاب مشتری...</option>${so(L.cs.map(c=>[c.id,name(c)+' — '+c.phone]))}</select>`;break;
+    case'user':h=`<select id="${id}"><option value="">—</option>${so(L.us.map(u=>[u.id,u.name]))}</select>`;break;
+    case'prod':h=`<select id="${id}"><option value="">انتخاب کالا...</option>${so(L.ps.map(p=>[p.id,p.name+(p.stock!=null?' — موجودی '+p.stock:'')]))}</select>`;break;
+    case'date':h=DP(id,v?ymd(v):'');break;
+    case'dt':h=DP(id,v?ymd(v):'',1,v?new Date(v).toTimeString().slice(0,5):'09:00');break;
+    case'check':h=`<label class="chk"><input type="checkbox" id="${id}" ${v?'checked':''}> ${f.cl||''}</label>`;break;
+    case'tags':h=`<input id="${id}" dir="ltr" value="${esc((v||[]).join(','))}" placeholder="با ویرگول جدا کنید">`;break;
+    case'num':h=`<input id="${id}" inputmode="numeric" value="${v??''}">`;break;
+    case'img':h=`<input type="file" accept="image/*" id="${id}" data-img="${esc(v||'')}"><img class="thumb" id="${id}_p" src="${esc(v||'')}" alt="" ${v?'':'hidden'}>`;break;
+    case'items':{const cur=new Map((v||[]).map(i=>[i.productId,i])),all=[...L.ps.filter(p=>p.active!==false||cur.has(p.id)).map(p=>({productId:p.id,name:p.name,price:p.price,stock:p.stock}))];
+      (v||[]).forEach(i=>{if(!all.find(a=>a.productId===i.productId))all.push({productId:i.productId,name:i.name,price:i.price})});
+      h=`<div id="${id}" style="max-height:200px;overflow:auto">${all.map(p=>`<label class="li" style="padding:6px 8px"><input type="checkbox" style="width:auto" data-p='${esc(JSON.stringify(p))}' ${cur.has(p.productId)?'checked':''}><span class="m">${esc(p.name)} <small>${money(p.price)}${p.stock!=null?' · موجودی '+p.stock.toLocaleString('fa-IR'):''}</small></span><input type="number" min="1" class="qty" value="${cur.get(p.productId)?.qty||1}" style="width:70px" aria-label="تعداد"></label>`).join('')||'<div class="state">ابتدا محصول تعریف کنید.</div>'}</div>`;break}
+    default:h=`<input id="${id}" ${f.t==='tel'?'dir="ltr" inputmode="tel"':''} value="${esc(v)}">`}
+  return `<div class="${f.w?'':'fw'}">${F(f.l+(f.req?' *':''),h)}</div>`}
+function rd(f){const id='f_'+f.k,el=$('#'+id);switch(f.t){case'num':return num(el.value);case'check':return el.checked;case'tags':return el.value.split(',').map(x=>norm(x).trim()).filter(Boolean);case'date':case'dt':return dtVal(id,f.t==='dt');case'img':return el.dataset.img||'';
+  case'items':return[...el.querySelectorAll('input[type=checkbox]:checked')].map(c=>{const{stock,...p}=JSON.parse(c.dataset.p);return{...p,qty:Math.max(1,+c.closest('label').querySelector('.qty').value||1)}});default:return el.value.trim()}}
+async function mini(title,fields,vals,L,onSave,label){
+  modal(title,`<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">${fields.map(f=>fld(f,vals[f.k],L)).join('')}</div>`,async()=>{const d={};
+    for(const f of fields){d[f.k]=rd(f);if(f.req&&(d[f.k]===''||d[f.k]==null||(Array.isArray(d[f.k])&&!d[f.k].length))){toast(f.l+' الزامی است');return false}}return onSave(d)},label);
+  fields.filter(f=>f.t==='img').forEach(f=>{$('#f_'+f.k).onchange=e=>{const file=e.target.files[0];if(!file)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),s=Math.min(1,260/Math.max(im.width,im.height));c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);const u=c.toDataURL('image/jpeg',.8);e.target.dataset.img=u;$('#f_'+f.k+'_p').src=u;$('#f_'+f.k+'_p').hidden=false};im.src=URL.createObjectURL(file)}})}
+
+const SCHEMA={
+  customers:{t:'مشتری',f:[{k:'firstName',l:'نام',w:1},{k:'lastName',l:'نام خانوادگی',w:1},{k:'companyName',l:'نام مجموعه'},{k:'phone',l:'موبایل',t:'tel',req:1,w:1},{k:'secondaryPhones',l:'شماره‌های دیگر',t:'tags',w:1},{k:'city',l:'شهر',w:1},{k:'customerType',l:'نوع',t:'sel',opts:['حقیقی','حقوقی'],w:1},{k:'customerGroup',l:'گروه',t:'sel',opts:GROUPS,w:1},{k:'status',l:'وضعیت',t:'sel',opts:[['active','فعال'],['inactive','غیرفعال']],w:1},{k:'assignedTo',l:'کارشناس مسئول',t:'user',w:1},{k:'balance',l:'مانده بدهی (تومان)',t:'num',w:1},{k:'debtCategory',l:'دسته‌ی بدهی',t:'sel',opts:DEBTCAT,w:1},{k:'address',l:'آدرس'},{k:'notes',l:'توضیحات',t:'area'}],
+    def:{status:'active',customerGroup:'جدید',customerType:'حقیقی',balance:0},
+    fix(d,rec,L){if(!d.firstName&&!d.companyName)return'نام یا نام مجموعه لازم است';d.phone=normPhone(d.phone);if(d.phone.length<10)return'شماره‌ی تلفن معتبر نیست';
+      const dup=L.cs.find(c=>c.phone===d.phone&&c.id!==rec?.id);if(dup)return'این شماره قبلاً برای «'+name(dup)+'» ثبت شده است';
+      d.secondaryPhones=d.secondaryPhones.map(normPhone);d.debtSince=d.balance>0?(rec?.debtSince||now()):null;if(!rec)Object.assign(d,{ordersCount:0,totalPurchase:0,lastPurchaseAt:null,lastReminderAt:null,reminderCount:0})},
+    after:(r,n)=>n&&log(r.id,'create','مشتری ایجاد شد')},
+  products:{t:'محصول',f:[{k:'name',l:'نام',req:1,w:1},{k:'code',l:'کد',w:1},{k:'category',l:'دسته‌بندی',w:1},{k:'price',l:'قیمت (تومان)',t:'num',req:1,w:1},{k:'unit',l:'واحد',w:1},{k:'active',l:'وضعیت',t:'check',cl:'فعال',w:1},{k:'stock',l:'موجودی انبار',t:'num',w:1},{k:'minStock',l:'حد هشدار موجودی',t:'num',w:1},{k:'image',l:'تصویر',t:'img'},{k:'description',l:'توضیحات',t:'area'}],def:{active:true,stock:0,minStock:0},
+    fix:d=>{d.low=d.stock<=d.minStock},after:(r,n,rec)=>{const diff=r.stock-(rec?.stock||0);return diff&&StockMoveService.create({productId:r.id,qty:diff,type:n?'in':'adjust',ref:null,note:n?'موجودی اولیه':'اصلاح دستی'})}},
+  calls:{t:'تماس',f:[{k:'customerId',l:'مشتری',t:'cust',req:1},{k:'kind',l:'نوع',t:'sel',opts:opts(LBL.kind),w:1},{k:'direction',l:'جهت',t:'sel',opts:[['in','ورودی'],['out','خروجی']],w:1},{k:'outcome',l:'نتیجه'},{k:'summary',l:'خلاصه‌ی گفتگو',t:'area',req:1},{k:'createdAt',l:'زمان تماس',t:'dt'}],def:{kind:'sales',direction:'in'},after:(r,n)=>n&&log(r.customerId,'call','تماس: '+short(r.summary))},
+  followups:{t:'پیگیری',f:[{k:'customerId',l:'مشتری',t:'cust',req:1},{k:'type',l:'نوع',t:'sel',opts:opts(LBL.ft),w:1},{k:'assignee',l:'مسئول پیگیری',t:'user',w:1},{k:'title',l:'عنوان',req:1},{k:'dueAt',l:'موعد',t:'dt',req:1},{k:'status',l:'وضعیت',t:'sel',opts:[['open','باز'],['done','انجام شد']],w:1},{k:'description',l:'توضیحات',t:'area'},{k:'result',l:'نتیجه‌ی پیگیری',t:'area'}],def:{type:'sales',status:'open'},fix:d=>{d.completedAt=d.status==='done'?now():null},after:(r,n)=>n&&log(r.customerId,'followup','پیگیری ثبت شد: '+r.title)},
+  requests:{t:'درخواست قیمت',f:[{k:'customerId',l:'مشتری',t:'cust',req:1},{k:'items',l:'محصولات و تعداد',t:'items',req:1},{k:'status',l:'وضعیت',t:'sel',opts:opts(LBL.rs),w:1},{k:'date',l:'تاریخ',t:'dt',w:1},{k:'note',l:'یادداشت',t:'area'}],def:{status:'priced',date:now()},fix(d){d.productIds=d.items.map(i=>i.productId);d.amount=sum(d.items)},after:(r,n)=>n&&log(r.customerId,'request','ثبت درخواست: '+r.items.map(i=>i.name).join('، '))},
+  invoices:{t:'پیش‌فاکتور',f:[{k:'customerId',l:'مشتری',t:'cust',req:1},{k:'items',l:'کالاها و تعداد',t:'items',req:1},{k:'discount',l:'تخفیف (تومان)',t:'num',w:1},{k:'issuedAt',l:'تاریخ صدور',t:'date',w:1},{k:'dueAt',l:'سررسید پرداخت',t:'date',w:1},{k:'note',l:'یادداشت',t:'area'}],def:{discount:0,issuedAt:now()},
+    guard:r=>r.status!=='proforma'?'فقط پیش‌فاکتور قابل ویرایش است؛ فاکتور صادرشده را لغو کنید.':null,fix:d=>{d.productIds=d.items.map(i=>i.productId);totals(d)},
+    create:d=>InvoiceWorkflow.create(d),update:(id,d,rec)=>InvoiceService.update(id,{...d,payState:payStateOf(rec.payments,d.total)})},
+  users:{t:'کاربر',f:[{k:'name',l:'نام',req:1,w:1},{k:'role',l:'نقش',t:'sel',opts:opts(LBL.role),w:1},{k:'phone',l:'موبایل',t:'tel'}],def:{role:'sales'}},
+  templates:{t:'قالب پیام',f:[{k:'title',l:'عنوان',req:1,w:1},{k:'category',l:'دسته',w:1},{k:'body',l:'متن (از {name} و {balance} و {company} می‌توانید استفاده کنید)',t:'area',req:1}],def:{}}};
+async function openForm(e,id,pre={},done){
+  if(!can(e+'.edit'))return toast('دسترسی ندارید');
+  const S=SCHEMA[e],[rec,L]=await Promise.all([id?SV[e].getById(id).then(r=>r.data):null,lists()]);if(id&&!rec)return toast('رکورد پیدا نشد');
+  const g=id&&S.guard?.(rec);if(g)return toast(g);
+  mini((id?'ویرایش ':'افزودن ')+S.t,S.f,{...(S.def||{}),...pre,...(rec||{})},L,async d=>{
+    const er=S.fix?.(d,rec,L);if(er){toast(er);return false}
+    const r=id?await(S.update?S.update(id,d,rec):SV[e].update(id,d)):await(S.create?S.create(d):SV[e].create(d));
+    if(!await check(r,'ذخیره شد'))return false;await S.after?.(r.data,!id,rec);done?done(r.data):refresh()})}
+
+/* ---------- لیست عمومی با جست‌وجو، فیلتر، مرتب‌سازی و صفحه‌بندی ---------- */
+const LS={},SELC=new Set(),DEBT_KEY='customersکارتابل بدهکاران';
+function drawSel(){const b=$('#selbar');if(!b)return;b.hidden=!SELC.size;b.innerHTML=SELC.size?`<b>${SELC.size.toLocaleString('fa-IR')} مورد انتخاب شده</b><button class="btn s" data-a="selall">انتخاب همه‌ی این صفحه</button><button class="btn s" data-a="bgroup">تغییر گروه</button><button class="btn s" data-a="bassign">تخصیص کارشناس</button><button class="btn s" data-a="bprice">ارسال قیمت</button><button class="btn s" data-a="bulk">پیام</button>${page==='debtors'?'<button class="btn s" data-a="remrun">یادآوری بدهی</button><button class="btn s" data-a="bdcat">دسته‌ی بدهی</button>':''}<button class="btn s" data-a="selclr">لغو انتخاب</button>`:''}
+async function listPage(c){
+  const S=LS[c.e+c.title]=LS[c.e+c.title]||{q:'',f:{},s:c.sorts[0][0],d:c.dir||'desc',pg:1};
+  $('#main').innerHTML=ph(c.title,(c.add!==false&&can(c.e+'.edit')?`<button class="btn p" data-a="ed" data-e="${c.e}">${I.plus} ${c.add||'افزودن'}</button>`:'')+(c.top||''))+`<div class="glass card"><div class="tb" id="tb"></div>${c.sel?'<div class="row" id="selbar" hidden></div>':''}<div id="ls"></div><div class="pgn" id="pg"></div></div>`;
+  const T=navTok,tbEl=$('#tb'),lsEl=$('#ls'),pgEl=$('#pg');const L=await lists();const LK={cs:mapOf(L.cs),us:mapOf(L.us),ps:mapOf(L.ps),L};
+  for(const e of c.lk||[]){const r=await SV[e].getAll();LK[e]=r.data||[]}
+  if(T!==navTok)return;
+  tbEl.innerHTML=`<input class="q" id="tq" placeholder="جستجو..." value="${esc(S.q)}" aria-label="جستجو">`+(c.filters||[]).map(f=>{const o=typeof f.opts==='function'?f.opts(LK):f.opts;return f.date?`<div style="min-width:170px">${DP('tf_'+f.k,S.f[f.k]||'')}</div>`:`<select id="tf_${f.k}" aria-label="${f.l}"><option value="">${f.l}: همه</option>${o.map(([a,b])=>`<option value="${esc(a)}" ${S.f[f.k]==a?'selected':''}>${esc(b)}</option>`).join('')}</select>`}).join('')+`<select id="ts" aria-label="مرتب‌سازی">${c.sorts.map(([k,l])=>`<option value="${k}" ${S.s===k?'selected':''}>مرتب‌سازی: ${l}</option>`).join('')}</select><button class="btn" id="td" title="جهت مرتب‌سازی">${S.d==='desc'?'↓ نزولی':'↑ صعودی'}</button>`;
+  const run=async()=>{const fl={...(c.fixed||{})};
+    for(const f of c.filters||[]){const v=S.f[f.k];if(!v)continue;const p=f.to?f.to(v):{[f.k]:v};for(const[k,x]of Object.entries(p))fl[k]=typeof x==='object'&&typeof fl[k]==='object'?{...fl[k],...x}:x}
+    await load(lsEl,async()=>{const q=()=>SV[c.e].search({search:S.q,filters:fl,sortBy:S.s,sortOrder:S.d,page:S.pg,limit:c.limit||10});let r=await q();if(r.success&&!r.data.length&&r.meta?.total&&S.pg>1){S.pg=Math.ceil(r.meta.total/(c.limit||10));r=await q()}return r},
+      ({data,meta})=>{lsEl.innerHTML=data.map(x=>c.row(x,LK)).join('');const pages=Math.ceil(meta.total/meta.limit);pgEl.innerHTML=`<small class="mut">${meta.total.toLocaleString('fa-IR')} مورد</small>`+(pages>1?`<button class="btn s" ${S.pg<2?'disabled':''} data-a="pg" data-id="${S.pg-1}">قبلی</button><small>صفحه ${S.pg.toLocaleString('fa-IR')} از ${pages.toLocaleString('fa-IR')}</small><button class="btn s" ${S.pg>=pages?'disabled':''} data-a="pg" data-id="${S.pg+1}">بعدی</button>`:'')},
+      c.empty);drawSel()};
+  PAGE.run=pg=>{if(pg)S.pg=pg;run()};
+  let t;$('#tq').oninput=e=>{clearTimeout(t);t=setTimeout(()=>{S.q=e.target.value;S.pg=1;run()},250)};
+  for(const f of c.filters||[])$('#tf_'+f.k).onchange=e=>{S.f[f.k]=f.date?e.target.dataset.iso:e.target.value;S.pg=1;run()};
+  $('#ts').onchange=e=>{S.s=e.target.value;S.pg=1;run()};$('#td').onclick=e=>{S.d=S.d==='desc'?'asc':'desc';e.target.textContent=S.d==='desc'?'↓ نزولی':'↑ صعودی';run()};run()}
+const PAGE={};
+
+/* ---------- ردیف‌ها (مشترک بین صفحه‌ها و پروفایل) ---------- */
+const stockChip=p=>(p.stock||0)<=0?chip('ناموجود','b'):p.low?chip('موجودی '+p.stock.toLocaleString('fa-IR')+' (کم)','w'):chip('موجودی '+p.stock.toLocaleString('fa-IR'),'ok');
+const ROW={
+  customers:(x,LK)=>`<div class="li"><input type="checkbox" class="sc" style="width:auto" data-a="sel" data-id="${x.id}" ${SELC.has(x.id)?'checked':''} aria-label="انتخاب">${av(name(x))}<div class="m"><b>${esc(name(x))}</b> <small dir="ltr">${esc(x.phone)}</small><br>${chip(x.customerGroup||'—')} ${x.city?chip(x.city,'m'):''} ${x.status==='inactive'?chip('غیرفعال','m'):''} ${x.balance>0?chip('بدهی '+money(x.balance),'w'):''} <small>${x.lastPurchaseAt?'آخرین خرید: '+jd(x.lastPurchaseAt)+' · مجموع '+cpt(x.totalPurchase):'بدون خرید'}${x.assignedTo?' · '+esc(un(LK,x.assignedTo)):''}</small></div>${acts('customers',x.id,`<button class="ib" title="پروفایل" data-a="prof" data-id="${x.id}">${I.eye}</button>`)}</div>`,
+  debtors:(x,LK)=>{const k=(LK.calls||[]).filter(c=>c.customerId===x.id&&c.kind==='debt').sort((a,b)=>a.createdAt<b.createdAt?1:-1)[0],f=(LK.followups||[]).filter(c=>c.customerId===x.id&&c.type==='debt'&&c.status==='open').sort((a,b)=>a.dueAt>b.dueAt?1:-1)[0],d=ageDays(x);
+    return`<div class="li"><input type="checkbox" class="sc" style="width:auto" data-a="sel" data-id="${x.id}" ${SELC.has(x.id)?'checked':''} aria-label="انتخاب">${av(name(x))}<div class="m"><b>${esc(name(x))}</b> <small dir="ltr">${esc(x.phone)}</small>${x.city?' '+chip(x.city,'m'):''}<br>${chip(money(x.balance),'b')} ${d!=null?chip(d.toLocaleString('fa-IR')+' روز',d>60?'b':d>30?'w':'m'):''} ${x.debtCategory?chip(x.debtCategory,'w'):''} ${f?chip('پیگیری: '+jd(f.dueAt),f.dueAt<now()?'w':''):chip('پیگیری ندارد','m')}<br><small>${k?'آخرین نتیجه ('+jd(k.createdAt)+'): '+esc(k.summary):'هنوز تماسی ثبت نشده'} · ${x.lastReminderAt?'آخرین یادآوری: '+jd(x.lastReminderAt):'یادآوری ارسال نشده'}</small></div><div class="a"><select data-a="dcat" data-id="${x.id}" style="width:auto;padding:3px 8px" aria-label="دسته‌ی بدهی" ${can('customers.edit')?'':'disabled'}>${DEBTCAT.map(([v,l])=>`<option value="${esc(v)}" ${(x.debtCategory||'')===v?'selected':''}>${l}</option>`).join('')}</select><button class="btn p s" data-a="debtc" data-id="${x.id}">ثبت نتیجه تماس</button><button class="ib" title="پیام یادآوری" data-a="remind" data-id="${x.id}">${I.msg}</button><button class="ib" title="پروفایل" data-a="prof" data-id="${x.id}">${I.eye}</button>${can('customers.edit')?`<button class="ib" data-a="ed" data-e="customers" data-id="${x.id}">${I.edit}</button>`:''}</div></div>`},
+  followups:(x,LK,dr)=>{const late=x.status==='open'&&x.dueAt<sod();return`<div class="li"><div class="av ${x.status==='done'?'ok':late?'b':''}">${x.status==='done'?I.ok:ic(NI.followups)}</div><div class="m">${dr?'':`<b>${esc(cn(LK,x.customerId))}</b> `}${chip(LBL.ft[x.type]||x.type,x.type==='debt'?'w':'')} ${late?chip('عقب‌افتاده','b'):''}<br>${esc(x.title)} <small>— ${jd(x.dueAt,1)}${x.assignee?' · '+esc(un(LK,x.assignee)):''}</small>${x.result?`<br><small>نتیجه: ${esc(x.result)}</small>`:''}</div>${acts('followups',x.id,(x.status==='open'?`<button class="ib" title="انجام شد" data-a="fdone" data-id="${x.id}">${I.ok}</button>`:'')+(dr?'':`<button class="ib" data-a="prof" data-id="${x.customerId}" title="پروفایل">${I.eye}</button>`))}</div>`},
+  requests:(x,LK,dr)=>`<div class="li"><div class="av">${ic(NI.requests)}</div><div class="m">${dr?'':`<b>${esc(cn(LK,x.customerId))}</b> `}<small>${jd(x.date||x.createdAt)}</small> ${chip(money(x.amount),'m')}<br><small>${(x.items||[]).map(i=>esc(i.name)+(i.qty>1?' ×'+i.qty.toLocaleString('fa-IR'):'')).join('، ')}${x.note?' — '+esc(x.note):''}</small></div><select data-a="rstat" data-id="${x.id}" style="width:auto;padding:3px 8px" ${can('requests.edit')?'':'disabled'} aria-label="وضعیت">${opts(LBL.rs).map(([k,l])=>`<option value="${k}" ${x.status===k?'selected':''}>${l}</option>`).join('')}</select>${acts('requests',x.id,(can('invoices.edit')?`<button class="ib" title="تبدیل به پیش‌فاکتور" data-a="req2inv" data-id="${x.id}">${ic(NI.invoices)}</button>`:'')+(dr?'':`<button class="ib" data-a="prof" data-id="${x.customerId}" title="پروفایل">${I.eye}</button>`))}</div>`,
+  calls:(x,LK,dr)=>`<div class="li"><div class="av ${x.kind==='debt'?'w':''}">${ic(NI.desk)}</div><div class="m">${dr?'':`<b>${esc(cn(LK,x.customerId))}</b> `}${chip(LBL.kind[x.kind]||'—',x.kind==='debt'?'w':'')} ${chip(x.direction==='out'?'خروجی':'ورودی','m')} ${x.outcome?chip(x.outcome,'ok'):''} <small>${jd(x.createdAt,1)}</small><br>${esc(x.summary)}</div>${acts('calls',x.id,dr?'':`<button class="ib" data-a="prof" data-id="${x.customerId}" title="پروفایل">${I.eye}</button>`)}</div>`,
+  messages:(x,LK,dr)=>`<div class="li"><div class="av">${I.msg}</div><div class="m">${dr?'':`<b>${esc(cn(LK,x.customerId))}</b> `}${chip(Channels[x.channel]?.label||x.channel,'m')} ${chip(LBL.ms[x.status]||x.status,x.status==='sent'?'ok':'w')} <small>${jd(x.createdAt,1)}</small><br><small>${esc(short(x.body))}</small></div><div class="a"><button class="ib" title="مشاهده" data-a="vmsg" data-id="${x.id}">${I.eye}</button>${can('messages.delete')?`<button class="ib d" data-a="rm" data-e="messages" data-id="${x.id}">${I.del}</button>`:''}</div></div>`,
+  invoices:(x,LK,dr)=>`<div class="li"><div class="av ${x.status==='canceled'?'b':isFinal(x)?'ok':''}">${ic(NI.invoices)}</div><div class="m"><b>${esc(x.finalNo||x.no)}</b> ${dr?'':esc(cn(LK,x.customerId))} <small>${jd(x.issuedAt)}</small><br>${chip(LBL.is[x.status],ISC[x.status])} ${chip(LBL.ps[x.payState]||'',PSC[x.payState])} ${chip(money(x.total),'m')}${x.dueAt&&x.payState!=='paid'&&x.status!=='canceled'?(x.dueAt<now()?' '+chip('سررسید گذشته','b'):' '+chip('سررسید '+jd(x.dueAt),'m')):''}<br><small>${x.items.map(i=>esc(i.name)+(i.qty>1?' ×'+i.qty.toLocaleString('fa-IR'):'')).join('، ')}</small></div><div class="a"><button class="ib" title="مشاهده" data-a="inv" data-id="${x.id}">${I.eye}</button>${can('message.send')?`<button class="ib" title="ارسال برای مشتری" data-a="invsend" data-id="${x.id}">${I.msg}</button>`:''}${can('invoices.edit')&&x.status!=='canceled'?`<button class="ib" title="وضعیت و واریز" data-a="invst" data-id="${x.id}">${I.ok}</button>`:''}${can('invoices.edit')&&x.status==='proforma'?`<button class="ib" title="ویرایش" data-a="ed" data-e="invoices" data-id="${x.id}">${I.edit}</button>`:''}${can('invoices.delete')&&['proforma','canceled'].includes(x.status)?`<button class="ib d" title="حذف" data-a="rm" data-e="invoices" data-id="${x.id}">${I.del}</button>`:''}</div></div>`,
+  products:x=>`<div class="li">${av(x.name,x.image)}<div class="m"><b>${esc(x.name)}</b> <small>${esc(x.code||'')}</small> ${x.active===false?chip('غیرفعال','m'):''}<br><small>${money(x.price)}${x.unit?' / '+esc(x.unit):''}${x.category?' · '+esc(x.category):''}</small> ${stockChip(x)}</div>${acts('products',x.id)}</div>`,
+  stock:x=>`<div class="li">${av(x.name,x.image)}<div class="m"><b>${esc(x.name)}</b> <small>${esc(x.code||'')}</small><br>${stockChip(x)} <small>حد هشدار ${(x.minStock||0).toLocaleString('fa-IR')} · ارزش ${cpt((x.stock||0)*x.price)} تومان</small></div><div class="a">${can('products.edit')?`<button class="btn s" data-a="stockin" data-id="${x.id}">ورود / تعدیل</button>`:''}<button class="btn s" data-a="kardex" data-id="${x.id}">کاردکس</button></div></div>`,
+  users:x=>`<div class="li">${av(x.name)}<div class="m"><b>${esc(x.name)}</b> ${chip(LBL.role[x.role]||x.role)}<br><small dir="ltr">${esc(x.phone||'')}</small></div>${acts('users',x.id)}</div>`,
+  templates:x=>`<div class="li"><div class="av">${ic(NI.templates)}</div><div class="m"><b>${esc(x.title)}</b> ${x.category?chip(x.category,'m'):''}<br><small>${esc(short(x.body))}</small></div>${acts('templates',x.id)}</div>`};
+const rng=(field,op)=>v=>({[field]:{[op]:new Date(v+(op==='gte'?'T00:00:00':'T23:59:59')).toISOString()}});
+
+/* ---------- صفحه‌ها ---------- */
+const GR=GROUPS.map(g=>[g,g]),cityOpts=LK=>[...new Set(LK.L.cs.map(c=>c.city).filter(Boolean))].map(c=>[c,c]),userOpts=LK=>LK.L.us.map(u=>[u.id,u.name]),custOpts=LK=>LK.L.cs.map(c=>[c.id,name(c)]);
+const kpi=(l,n)=>`<div class="glass card kpi"><b>${typeof n==='number'?n.toLocaleString('fa-IR'):n}</b><span>${l}</span></div>`;
+const hbars=(o,f=v=>v.toLocaleString('fa-IR'))=>{const m=Math.max(...Object.values(o),1);return Object.entries(o).map(([n,v])=>`<div class="hb"><span>${esc(n)}</span><div class="t"><i style="width:${v/m*100}%"></i></div><small>${f(v)}</small></div>`).join('')||'<div class="state">داده‌ای نیست.</div>'};
+const agg=(arr,key,val)=>{const o={};arr.forEach(x=>{const k=key(x)||'نامشخص';o[k]=(o[k]||0)+val(x)});return o};
+const topN=(o,n=6)=>Object.fromEntries(Object.entries(o).sort((a,b)=>b[1]-a[1]).slice(0,n));
+const PAGES={
+async dashboard(){
+  $('#main').innerHTML=ph('داشبورد')+'<div id="dash"></div>';
+  await load($('#dash'),async()=>{const E=['customers','followups','invoices','activities','products'],R=await Promise.all(E.map(e=>SV[e].getAll()));const bad=R.find(x=>!x.success);return bad||ok(Object.fromEntries(['c','f','i','a','p'].map((k,i)=>[k,R[i].data])))},({data:D})=>{
+    const[ny,nm]=g2j(new Date()),sameM=i=>{const j=g2j(new Date(i));return j[0]===ny&&j[1]===nm},open=D.f.filter(x=>x.status==='open'),tod=open.filter(x=>x.dueAt<=eod()),late=open.filter(x=>x.dueAt<sod()),sold=D.i.filter(isFinal),cm=mapOf(D.c),pend=D.i.filter(i=>['proforma','paid'].includes(i.status)),low=D.p.filter(p=>p.low&&p.active!==false),debt=D.c.filter(c=>c.balance>0).sort((a,b)=>b.balance-a.balance);
+    const ms=[];let[y,m]=[ny,nm];for(let i=0;i<6;i++){ms.unshift([y,m]);if(--m<1){m=12;y--}}
+    const sales=ms.map(([y,m])=>[MN[m-1],sold.filter(i=>{const j=g2j(new Date(i.finalAt));return j[0]===y&&j[1]===m}).reduce((s,i)=>s+i.total,0)]),mx=Math.max(...sales.map(x=>x[1]),1);
+    const cnt={};sold.forEach(i=>i.items.forEach(x=>cnt[x.name]=(cnt[x.name]||0)+x.qty));
+    const byCu=new Map();sold.forEach(i=>{if(!byCu.has(i.customerId))byCu.set(i.customerId,[]);byCu.get(i.customerId).push(i)});const opp=D.c.map(c=>({c,b:behavior(byCu.get(c.id)||[])})).filter(o=>o.b.avg&&o.b.since>=o.b.avg).sort((a,b)=>b.b.since-a.b.since).slice(0,5),ag=Object.fromEntries([...AG,AGU].map(g=>[g[1],D.c.filter(c=>c.balance>0&&ageBucket(c)?.[0]===g[0]).reduce((s,c)=>s+c.balance,0)]));
+    $('#dash').innerHTML=`<div class="grid g4">${kpi('مشتریان',D.c.length)}${kpi('مشتری جدید این ماه',D.c.filter(x=>sameM(x.createdAt)).length)}${kpi('فروش این ماه',cpt(sold.filter(i=>sameM(i.finalAt)).reduce((s,i)=>s+i.total,0))+' تومان')}${kpi('مطالبات معوق',cpt(debt.reduce((s,c)=>s+c.balance,0))+' تومان')}${kpi('پیش‌فاکتور در جریان',pend.length)}${kpi('پیگیری امروز',tod.length)}${kpi('پیگیری عقب‌افتاده',late.length)}${kpi('کالای کم‌موجود',low.length)}</div>
+    <div class="grid g2" style="margin-top:14px"><div class="glass card"><h2>فروش ۶ ماه اخیر</h2><div class="bars">${sales.map(([l,v])=>`<div><small>${cpt(v)}</small><i style="height:${v/mx*100}%"></i>${l}</div>`).join('')}</div></div><div class="glass card"><h2>پرفروش‌ترین کالاها</h2>${hbars(topN(cnt,5))}</div></div>
+    <div class="grid g2" style="margin-top:14px"><div class="glass card"><h2>پیگیری‌های امروز و عقب‌افتاده</h2>${[...late,...tod.filter(x=>!late.includes(x))].slice(0,5).map(x=>`<div class="li"><div class="m"><b>${esc(name(cm.get(x.customerId)))}</b> ${chip(LBL.ft[x.type]||'',x.type==='debt'?'w':'')}<br><small>${esc(x.title)} — ${jd(x.dueAt,1)}</small></div><button class="ib" data-a="fdone" data-id="${x.id}">${I.ok}</button></div>`).join('')||'<div class="state">پیگیری سررسیدشده‌ای نیست.</div>'}</div>
+    <div class="glass card"><h2>بیشترین مطالبات</h2>${debt.slice(0,5).map(x=>`<div class="li">${av(name(x))}<div class="m"><b>${esc(name(x))}</b><br>${chip(money(x.balance),'b')}</div><button class="btn s" data-a="debtc" data-id="${x.id}">تماس</button></div>`).join('')||'<div class="state">مشتری بدهکاری نیست.</div>'}</div></div>
+    <div class="grid g2" style="margin-top:14px"><div class="glass card"><h2>فاکتورهای در جریان</h2>${pend.slice(0,5).map(i=>ROW.invoices(i,{cs:cm,us:new Map()})).join('')||'<div class="state">فاکتور بازی نیست.</div>'}</div><div class="glass card"><h2>هشدار موجودی انبار</h2>${low.slice(0,6).map(p=>`<div class="li">${av(p.name,p.image)}<div class="m"><b>${esc(p.name)}</b><br>${stockChip(p)}</div></div>`).join('')||'<div class="state">موجودی همه‌ی کالاها کافی است.</div>'}</div></div>
+    <div class="grid g2" style="margin-top:14px"><div class="glass card"><h2>فرصت فروش: زمان خرید مجدد رسیده</h2>${opp.map(o=>`<div class="li">${av(name(o.c))}<div class="m"><b>${esc(name(o.c))}</b><br><small>${o.b.since.toLocaleString('fa-IR')} روز از آخرین خرید · میانگین ${o.b.avg.toLocaleString('fa-IR')} روز</small></div><button class="btn s" data-a="callc" data-id="${o.c.id}">تماس</button></div>`).join('')||'<div class="state">فعلاً مشتری‌ای به زمان خرید مجدد نرسیده است.</div>'}</div><div class="glass card"><h2>سن مطالبات</h2>${hbars(ag,cpt)}</div></div>
+    <div class="glass card" style="margin-top:14px"><h2>آخرین فعالیت‌ها</h2><div class="tl">${D.a.sort((x,y)=>x.createdAt<y.createdAt?1:-1).slice(0,8).map(e=>`<div><b>${esc(name(cm.get(e.customerId)))}</b>: ${esc(e.title)} <small class="mut">${jd(e.createdAt,1)}</small></div>`).join('')||'<div class="state">فعالیتی ثبت نشده.</div>'}</div></div>`},'داده‌ای برای نمایش نیست.')},
+
+async desk(){
+  const T=navTok,L=await lists();if(T!==navTok)return;Object.assign(D,{L,prods:L.ps.filter(p=>p.active!==false)});
+  $('#main').innerHTML=ph('تماس جدید')+`<div class="grid g2"><section class="glass card"><h2>۱. مشتری</h2><div id="cbox"></div><h2 style="margin-top:16px">۲. محصولات درخواستی</h2><input id="pq" placeholder="جست‌وجوی محصول" aria-label="جست‌وجوی محصول"><div style="max-height:270px;overflow:auto;margin-top:6px" id="pl"></div></section>
+  <section class="glass card"><h2>۳. پیام</h2><div class="row"><select id="tone" style="width:auto"><option value="friendly">لحن صمیمی</option><option value="formal">لحن رسمی</option></select><select id="tp" style="width:auto"><option value="">قالب آماده...</option>${L.ts.map(t=>`<option value="${t.id}">${esc(t.title)}</option>`).join('')}</select><button class="btn s" data-a="regen">متن جدید</button></div><textarea id="msg" rows="9" aria-label="متن پیام"></textarea>
+  <div class="row">${Object.entries(Channels).map(([k,c])=>`<button class="btn p" data-a="send" data-id="${k}">${c.label}</button>`).join('')}<button class="btn" data-a="send" data-id="copy">کپی</button><button class="btn sp" data-a="deskinv" ${can('invoices.edit')?'':'disabled'}>پیش‌فاکتور از محصولات انتخابی</button></div>
+  <h2 style="margin-top:12px">۴. نتیجه تماس</h2><textarea id="res" rows="2" placeholder="مثلاً: قیمت آبلیمو و فلفل ارسال شد"></textarea>
+  <div class="grid g2" style="gap:8px"><div>${F('نتیجه',`<select id="oc"><option value="priced">قیمت داده شد</option><option value="ordered">سفارش ثبت شد</option><option value="new">نیاز به تصمیم‌گیری</option></select>`)}</div><div>${F('مسئول',`<select id="as">${L.us.map(u=>`<option value="${u.id}" ${u.id===AuthService.user.id?'selected':''}>${esc(u.name)}</option>`).join('')}</select>`)}</div></div>
+  ${F('پیگیری بعدی (اختیاری)',DP('nx','',1))}<div class="row e"><button class="btn p" data-a="savecall" ${can('calls.edit')?'':'disabled'}>ثبت تماس</button></div></section></div>`;
+  $('#pq').oninput=deskProducts;$('#msg').oninput=()=>D.edited=true;$('#tone').onchange=()=>regen(true);
+  $('#tp').onchange=e=>{const t=L.ts.find(x=>x.id===e.target.value);if(t){$('#msg').value=tpl(t.body,D.cust);D.edited=true}};deskCust();deskProducts();regen(true)},
+
+customers:()=>listPage({e:'customers',title:'مشتریان',add:'مشتری جدید',sel:1,empty:'مشتری‌ای پیدا نشد. با «مشتری جدید» شروع کنید.',sorts:[['createdAt','جدیدترین'],['balance','مانده بدهی'],['totalPurchase','مجموع خرید'],['lastPurchaseAt','آخرین خرید'],['updatedAt','آخرین تغییر']],
+  filters:[{k:'city',l:'شهر',opts:cityOpts},{k:'customerGroup',l:'گروه',opts:GR},{k:'status',l:'وضعیت',opts:[['active','فعال'],['inactive','غیرفعال']]},{k:'customerType',l:'نوع',opts:[['حقیقی','حقیقی'],['حقوقی','حقوقی']]},{k:'assignedTo',l:'کارشناس',opts:userOpts},
+    {k:'debt',l:'حساب',opts:[['d','بدهکار'],['c','بدون بدهی']],to:v=>({balance:v==='d'?{gt:0}:{lte:0}})},
+    {k:'buy',l:'سابقه‌ی خرید',opts:[['y','خریدار'],['n','بدون خرید'],['d','بدون خرید ۶۰ روز اخیر']],to:v=>v==='y'?{ordersCount:{gt:0}}:v==='n'?{ordersCount:{lte:0}}:{ordersCount:{gt:0},lastPurchaseAt:{lt:new Date(Date.now()-60*864e5).toISOString()}}},
+    {k:'cf',l:'ثبت از',date:1,to:rng('createdAt','gte')},{k:'ct',l:'ثبت تا',date:1,to:rng('createdAt','lte')}],row:ROW.customers,
+  top:`<button class="btn" data-a="bulk" ${can('message.send')?'':'disabled'}>پیام گروهی</button><button class="btn" data-a="csv" data-e="customers">خروجی CSV</button>`}),
+async debtors(){
+  const T=navTok;await listPage({e:'customers',title:'کارتابل بدهکاران',add:false,sel:1,fixed:{balance:{gt:0}},empty:'مشتری بدهکاری وجود ندارد.',lk:['calls','followups'],sorts:[['balance','مبلغ بدهی'],['debtSince','قدیمی‌ترین بدهی'],['updatedAt','آخرین تغییر']],
+    filters:[{k:'aging',l:'سن بدهی',opts:[...AG,AGU].map(g=>[g[0],g[1]]),to:v=>{if(v==='u')return{debtSince:{eq:null}};const g=AG.find(x=>x[0]===v),t=n=>new Date(Date.now()-n*864e5).toISOString();return{debtSince:{lte:t(g[2]),gt:t(g[3]+1)}}}},{k:'dcat',l:'دسته‌ی بدهی',opts:DEBTCAT.slice(1).map(c=>[c[0],c[1]]),to:v=>({debtCategory:v})},{k:'city',l:'شهر',opts:cityOpts},{k:'customerGroup',l:'گروه',opts:GR},{k:'assignedTo',l:'کارشناس',opts:userOpts}],row:ROW.debtors,
+    top:`<button class="btn" data-a="remset" ${can('customers.edit')?'':'disabled'}>تنظیم یادآوری خودکار</button><button class="btn p" data-a="remrun" ${can('message.send')?'':'disabled'}>ارسال یادآوری بدهی</button>`});
+  const d=(await CustomerService.getAll({filters:{balance:{gt:0}}})).data||[];if(!d.length)return;const S=LS[DEBT_KEY]||{f:{}},due=(await ReminderService.due()).length;if(T!==navTok)return;
+  $('#main .ph').insertAdjacentHTML('afterend',`<div class="grid g4" style="margin-bottom:10px">${[...AG,AGU].map(g=>{const x=d.filter(c=>ageBucket(c)?.[0]===g[0]);if(g[0]==='u'&&!x.length)return'';return`<button class="glass card kpi ${S.f.aging===g[0]?'on':''}" data-a="agef" data-id="${g[0]}"><b>${cpt(x.reduce((s,c)=>s+c.balance,0))} تومان</b><span>${g[1]} · ${x.length.toLocaleString('fa-IR')} مشتری</span></button>`}).join('')}</div><p class="mut" style="margin:0 0 12px">مجموع مطالبات ${money(d.reduce((s,c)=>s+c.balance,0))} از ${d.length.toLocaleString('fa-IR')} مشتری · ${due.toLocaleString('fa-IR')} مورد طبق تنظیمات، موعد یادآوری دارد</p>`)},
+followups:()=>listPage({e:'followups',title:'پیگیری‌ها',add:'پیگیری جدید',dir:'asc',empty:'پیگیری‌ای وجود ندارد.',sorts:[['dueAt','موعد'],['createdAt','زمان ثبت']],
+  filters:[{k:'status',l:'وضعیت',opts:[['open','باز'],['done','انجام‌شده'],['late','عقب‌افتاده'],['today','امروز']],to:v=>v==='late'?{status:'open',dueAt:{lt:sod()}}:v==='today'?{status:'open',dueAt:{gte:sod(),lte:eod()}}:{status:v}},{k:'type',l:'نوع',opts:opts(LBL.ft)},{k:'assignee',l:'مسئول',opts:userOpts},{k:'from',l:'از',date:1,to:rng('dueAt','gte')},{k:'to',l:'تا',date:1,to:rng('dueAt','lte')}],row:(x,LK)=>ROW.followups(x,LK)}),
+requests:()=>listPage({e:'requests',title:'درخواست‌های قیمت',add:'ثبت درخواست',empty:'درخواستی ثبت نشده. از «تماس جدید» شروع کنید.',sorts:[['date','تاریخ'],['amount','مبلغ']],filters:[{k:'status',l:'وضعیت',opts:opts(LBL.rs)},{k:'productIds',l:'محصول',opts:LK=>LK.L.ps.map(p=>[p.id,p.name]),to:v=>({productIds:{has:v}})},{k:'customerId',l:'مشتری',opts:custOpts}],row:(x,LK)=>ROW.requests(x,LK)}),
+invoices:()=>listPage({e:'invoices',title:'فاکتورها',add:'پیش‌فاکتور جدید',empty:'فاکتوری صادر نشده. از «پیش‌فاکتور جدید» یا صفحه‌ی تماس شروع کنید.',sorts:[['issuedAt','تاریخ صدور'],['total','مبلغ']],
+  filters:[{k:'status',l:'وضعیت',opts:opts(LBL.is)},{k:'payState',l:'پرداخت',opts:opts(LBL.ps)},{k:'due',l:'سررسید',opts:[['o','سررسید گذشته']],to:()=>({payState:{ne:'paid'},dueAt:{lt:now()},status:{ne:'canceled'}})},{k:'customerId',l:'مشتری',opts:custOpts},{k:'from',l:'از',date:1,to:rng('issuedAt','gte')},{k:'to',l:'تا',date:1,to:rng('issuedAt','lte')}],row:(x,LK)=>ROW.invoices(x,LK),top:'<button class="btn" data-a="csv" data-e="invoices">خروجی CSV</button>'}),
+inventory:()=>listPage({e:'products',title:'انبار',add:false,empty:'کالایی ثبت نشده.',sorts:[['stock','موجودی'],['name','نام'],['updatedAt','آخرین تغییر']],
+  filters:[{k:'category',l:'دسته',opts:LK=>[...new Set(LK.L.ps.map(p=>p.category).filter(Boolean))].map(c=>[c,c])},{k:'low',l:'وضعیت موجودی',opts:[['1','کم‌موجود'],['0','موجودی کافی']],to:v=>({low:v==='1'})},{k:'zero',l:'ناموجود',opts:[['1','فقط ناموجود']],to:()=>({stock:{lte:0}})}],row:ROW.stock,top:`<button class="btn p" data-a="stockin" ${can('products.edit')?'':'disabled'}>ورود کالا به انبار</button><button class="btn" data-a="csv" data-e="products">خروجی CSV</button>`}),
+calls:()=>listPage({e:'calls',title:'تماس‌ها',add:'ثبت تماس',empty:'تماسی ثبت نشده.',sorts:[['createdAt','زمان']],filters:[{k:'kind',l:'نوع',opts:opts(LBL.kind)},{k:'direction',l:'جهت',opts:[['in','ورودی'],['out','خروجی']]},{k:'customerId',l:'مشتری',opts:custOpts}],row:(x,LK)=>ROW.calls(x,LK)}),
+messages:()=>listPage({e:'messages',title:'تاریخچه پیام‌ها',add:false,empty:'هنوز پیامی ارسال نشده.',sorts:[['createdAt','زمان']],filters:[{k:'channel',l:'کانال',opts:Object.entries(Channels).map(([k,c])=>[k,c.label])},{k:'status',l:'وضعیت',opts:opts(LBL.ms)}],row:(x,LK)=>ROW.messages(x,LK),top:`<button class="btn p" data-a="bulk" ${can('message.send')?'':'disabled'}>پیام گروهی</button>`}),
+templates:()=>listPage({e:'templates',title:'قالب‌های پیام',add:'قالب جدید',empty:'قالبی ندارید. مثلاً یک قالب یادآوری پرداخت بسازید.',sorts:[['createdAt','جدیدترین'],['title','عنوان']],filters:[],row:ROW.templates}),
+products:()=>listPage({e:'products',title:'بانک محصولات',add:'محصول جدید',empty:'محصولی ثبت نشده.',sorts:[['createdAt','جدیدترین'],['name','نام'],['price','قیمت']],filters:[{k:'category',l:'دسته',opts:LK=>[...new Set(LK.L.ps.map(p=>p.category).filter(Boolean))].map(c=>[c,c])},{k:'active',l:'وضعیت',opts:[['1','فعال'],['0','غیرفعال']],to:v=>({active:v==='1'})}],row:ROW.products}),
+users:()=>listPage({e:'users',title:'کاربران و دسترسی‌ها',add:'کاربر جدید',empty:'کاربری ثبت نشده.',sorts:[['createdAt','جدیدترین']],filters:[{k:'role',l:'نقش',opts:opts(LBL.role)}],row:ROW.users}),
+
+async reports(){
+  $('#main').innerHTML=ph('گزارش‌ها','<button class="btn" data-a="csv" data-e="customers">CSV مشتریان</button><button class="btn" data-a="csv" data-e="invoices">CSV فاکتورها</button>')+'<div id="rp"></div>';
+  await load($('#rp'),async()=>{const E=['customers','followups','invoices','calls','users','products'],R=await Promise.all(E.map(e=>SV[e].getAll()));const bad=R.find(x=>!x.success);return bad||ok(Object.fromEntries(['c','f','i','k','u','p'].map((k,i)=>[k,R[i].data])))},({data:D})=>{
+    const sold=D.i.filter(isFinal),cm=mapOf(D.c),tot=sold.reduce((s,i)=>s+i.total,0),done=D.f.filter(x=>x.status==='done').length,rate=D.f.length?Math.round(done/D.f.length*100):0,byP={};
+    sold.forEach(i=>i.items.forEach(x=>byP[x.name]=(byP[x.name]||0)+x.price*x.qty));
+    const cur=v=>cpt(v);
+    $('#rp').innerHTML=`<div class="grid g4">${kpi('مجموع فروش',cpt(tot)+' تومان')}${kpi('فاکتور نهایی',sold.length)}${kpi('میانگین هر فاکتور',cpt(sold.length?tot/sold.length:0)+' تومان')}${kpi('نرخ انجام پیگیری',rate.toLocaleString('fa-IR')+'٪')}</div>
+    <div class="grid g2" style="margin-top:14px"><div class="glass card"><h2>مشتریان برتر (خرید)</h2>${hbars(topN(agg(sold,i=>name(cm.get(i.customerId)),i=>i.total)),cur)}</div><div class="glass card"><h2>فروش بر اساس شهر</h2>${hbars(topN(agg(sold,i=>cm.get(i.customerId)?.city,i=>i.total)),cur)}</div>
+    <div class="glass card"><h2>فروش بر اساس کالا</h2>${hbars(topN(byP),cur)}</div><div class="glass card"><h2>وضعیت فاکتورها</h2>${hbars(agg(D.i,i=>LBL.is[i.status],()=>1))}</div>
+    <div class="glass card"><h2>نتیجه تماس‌ها</h2>${hbars(agg(D.k,k=>k.outcome,()=>1))}</div><div class="glass card"><h2>مشتریان بر اساس شهر</h2>${hbars(topN(agg(D.c,c=>c.city,()=>1)))}</div></div>
+    <div class="grid g2" style="margin-top:14px"><div class="glass card"><h2>عملکرد کارشناسان</h2>${D.u.map(u=>{const c=D.f.filter(x=>x.assignee===u.id);return`<div class="li">${av(u.name)}<div class="m"><b>${esc(u.name)}</b> ${chip(LBL.role[u.role])}<br><small>پیگیری: ${c.length.toLocaleString('fa-IR')} · انجام‌شده: ${c.filter(x=>x.status==='done').length.toLocaleString('fa-IR')} · مشتریان مسئول: ${D.c.filter(x=>x.assignedTo===u.id).length.toLocaleString('fa-IR')}</small></div></div>`}).join('')||'<div class="state">کاربری نیست.</div>'}</div>
+    <div class="glass card"><h2>کالاهای کم‌موجود</h2>${D.p.filter(p=>p.low).map(p=>`<div class="li">${av(p.name,p.image)}<div class="m"><b>${esc(p.name)}</b><br>${stockChip(p)}</div></div>`).join('')||'<div class="state">همه‌ی کالاها موجودی کافی دارند.</div>'}</div></div>`},'داده‌ای برای گزارش نیست.')},
+
+async settings(){
+  if(!can('settings.edit'))return $('#main').innerHTML=ph('تنظیمات')+'<div class="glass card state">دسترسی به تنظیمات برای نقش شما فعال نیست.</div>';
+  const s=Settings.get();
+  $('#main').innerHTML=ph('تنظیمات')+`<div class="grid g2"><div class="glass card"><h2>مشخصات و ظاهر</h2>${F('نام شرکت',`<input id="co" value="${esc(s.company)}">`)}${F('تلفن (امضای پیام و فاکتور)',`<input id="ph" dir="ltr" value="${esc(s.phone)}">`)}${F('اطلاعات پرداخت (در پیش‌فاکتور ارسال می‌شود)',`<textarea id="pi" rows="2" placeholder="شماره کارت یا شبا و نام صاحب حساب">${esc(s.payInfo)}</textarea>`)}${F('نرخ مالیات بر ارزش افزوده (٪) برای پیش‌فاکتورها',`<input id="tx" inputmode="numeric" value="${s.taxRate||0}">`)}${F('پوسته',`<select id="th"><option value="auto" ${s.theme==='auto'?'selected':''}>خودکار</option><option value="light" ${s.theme==='light'?'selected':''}>روشن</option><option value="dark" ${s.theme==='dark'?'selected':''}>تیره</option></select>`)}${F('حالت برنامه',`<select id="md"><option value="local" ${s.mode==='local'?'selected':''}>محلی (LocalStorage)</option><option value="api" ${s.mode==='api'?'selected':''}>سرور (API)</option></select>`)}${F('آدرس API',`<input id="api" dir="ltr" placeholder="https://example.com/api" value="${esc(s.apiBaseUrl)}">`)}${F('توکن (اختیاری)',`<input id="tk" dir="ltr" value="${esc(s.token)}">`)}</div>
+  <div class="glass card"><h2>ارسال مستقیم در ایتا و روبیکا</h2><p class="mut">قالب لینک چت مستقیم را بنویسید؛ {phone} شماره و {text} متن را جایگزین می‌کند. بدون قالب، متن کپی و وب‌اپ باز می‌شود.</p>${F('قالب ایتا',`<input id="de" dir="ltr" value="${esc(s.deepLinks.eitaa)}">`)}${F('قالب روبیکا',`<input id="dr" dir="ltr" value="${esc(s.deepLinks.rubika)}">`)}<div class="row" style="margin-top:14px"><button class="btn p" data-a="saves">ذخیره</button><button class="btn" data-a="remset">یادآوری خودکار بدهی</button><button class="btn" data-a="exp">پشتیبان JSON</button><button class="btn" data-a="imp">بازیابی JSON</button><button class="btn d" data-a="reset">بازنشانی داده‌ی نمونه</button></div></div></div>`}
+};
+
+/* ---------- صفحه‌ی تماس ---------- */
+const D={cust:null,multi:false,group:[],sel:{},sent:new Set(),edited:false,prods:[],L:null};
+const targets=()=>D.multi?D.group:(D.cust?[D.cust]:[]);
+function deskCust(){const b=$('#cbox');if(!b)return;const tg=`<label class="chk" style="margin-bottom:8px"><input type="checkbox" data-a="mm" ${D.multi?'checked':''}> ارسال برای چند مشتری</label>`;
+  const found=async()=>{const r=await CustomerService.search({search:$('#cq').value,limit:6}),ids=new Set(D.group.map(c=>c.id));
+    $('#cr').innerHTML=(r.success?r.data.filter(c=>D.multi?!ids.has(c.id):true).map(c=>`<div class="li">${av(name(c))}<div class="m">${esc(name(c))} <small dir="ltr">${esc(c.phone)}</small></div><button class="btn s" data-a="${D.multi?'gadd':'pickc'}" data-id="${c.id}">${D.multi?'افزودن':'انتخاب'}</button></div>`).join(''):`<div class="state err">${esc(r.message)}</div>`)+(can('customers.edit')?'<div class="row"><button class="btn s" data-a="newc">+ مشتری جدید</button></div>':'')};
+  if(!D.multi){
+    if(D.cust){const c=D.cust;b.innerHTML=tg+`<div class="li" style="background:var(--acc2)">${av(name(c))}<div class="m"><b>${esc(name(c))}</b> <small dir="ltr">${esc(c.phone)}</small>${c.balance>0?`<br>${chip('بدهی '+money(c.balance),'b')}`:''}</div><div class="a"><button class="ib" data-a="prof" data-id="${c.id}">${I.eye}</button><button class="btn s" data-a="chg">تغییر</button></div></div>`;return}
+    b.innerHTML=tg+'<input id="cq" placeholder="نام یا شماره مشتری" autocomplete="off" aria-label="جست‌وجوی مشتری"><div id="cr"></div>';$('#cq').oninput=found;found();return}
+  const cities=[...new Set(D.L.cs.map(c=>c.city).filter(Boolean))];
+  b.innerHTML=tg+`<div class="row">${D.group.map(c=>`<span class="chip">${esc(name(c))} <button class="ib" style="width:20px;height:20px" data-a="grm" data-id="${c.id}" aria-label="حذف">×</button></span>`).join('')||'<small class="mut">هنوز مشتری‌ای اضافه نشده.</small>'}</div>${D.group.length?`<small class="mut">${D.group.length.toLocaleString('fa-IR')} مشتری انتخاب شده</small>`:''}
+  <input id="cq" placeholder="جست‌وجو و افزودن مشتری" autocomplete="off" aria-label="جست‌وجوی مشتری"><div id="cr"></div><div class="row"><select id="gci" style="width:auto" aria-label="شهر"><option value="">شهر...</option>${cities.map(c=>`<option>${esc(c)}</option>`).join('')}</select><select id="ggr" style="width:auto" aria-label="گروه"><option value="">گروه...</option>${GROUPS.map(g=>`<option>${g}</option>`).join('')}</select><button class="btn s" data-a="gall">افزودن همه‌ی نتیجه</button><button class="btn s" data-a="gclr">پاک کردن لیست</button></div>`;$('#cq').oninput=found;found()}
+function deskProducts(){const t=($('#pq')?.value||'').trim(),r=D.prods.filter(p=>!t||p.name.includes(t)||(p.code||'').includes(t));
+  $('#pl').innerHTML=r.length?r.map(p=>`<div class="li" style="padding:8px">${av(p.name,p.image)}<label class="m" style="cursor:pointer"><input type="checkbox" style="width:auto;margin-inline-end:6px" data-a="tog" data-id="${p.id}" ${D.sel[p.id]?'checked':''}>${esc(p.name)}<br><small>${money(p.price)}${p.stock!=null?' · موجودی '+p.stock.toLocaleString('fa-IR'):''}</small></label>${D.sel[p.id]?`<input type="number" min="1" value="${D.sel[p.id]}" style="width:66px" data-a="qty" data-id="${p.id}" aria-label="تعداد">`:''}</div>`).join(''):'<div class="state">محصولی پیدا نشد.</div>'}
+const selItems=()=>D.prods.filter(p=>D.sel[p.id]).map(p=>({productId:p.id,name:p.name,price:p.price,unit:p.unit,description:p.description,qty:D.sel[p.id]}));
+async function regen(force){if(D.edited&&!force)return;const it=selItems(),tg=targets(),c=D.multi?{firstName:'{name}'}:D.cust,r=await AIService.compose(c,it,$('#tone')?.value);D.edited=false;if($('#msg'))$('#msg').value=tg.length||it.length?r.data.text:''}
+
+/* ---------- پروفایل مشتری ---------- */
+const PROF={id:null,tab:'ov',tl:'all'};
+async function profile(id,tab){PROF.id=id;if(tab)PROF.tab=tab;$('#bd').classList.add('on');$('#drw').classList.add('on');$('#drw').dataset.id='';await drawProfile()}
+function closeProfile(){PROF.id=null;$('#bd').classList.remove('on');$('#drw').classList.remove('on')}
+async function drawProfile(){
+  const id=PROF.id,el=$('#drw');if(!id)return;if(el.dataset.id!==id){el.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div>';el.dataset.id=id}
+  const q=(e,s='createdAt')=>SV[e].getAll({filters:{customerId:id},sortBy:s,sortOrder:'desc'});
+  const[c,k,f,m,r,iv,a,L,bal]=await Promise.all([CustomerService.getById(id),q('calls'),q('followups','dueAt'),q('messages'),q('requests','date'),q('invoices','issuedAt'),q('activities'),lists(),AccountingService.getBalance(id)]);
+  if(PROF.id!==id)return;if(!c.success){closeProfile();return toast(c.message)}
+  const x=c.data,LK={cs:mapOf([x]),us:mapOf(L.us),ps:mapOf(L.ps)},b=behavior(iv.data||[]),openF=(f.data||[]).filter(y=>y.status==='open'),n=v=>(v||[]).length.toLocaleString('fa-IR'),balance=bal.data?.balance??x.balance;
+  const T=[['ov','خلاصه'],['tl','تاریخچه'],['inv','فاکتورها ('+n(iv.data)+')'],['req','درخواست‌ها ('+n(r.data)+')'],['calls','تماس‌ها ('+n(k.data)+')'],['fu','پیگیری‌ها ('+n(f.data)+')'],['msg','پیام‌ها ('+n(m.data)+')']];
+  const lst=(arr,fn,em)=>arr&&arr.length?arr.map(fn).join(''):`<div class="state">${em}</div>`,stat=(l,v)=>kpi(l,v);
+  const body={
+    ov:()=>`<div class="grid g2">${stat('خریدهای نهایی',b.n)}${stat('مجموع خرید',money(b.total))}${stat('آخرین خرید',b.last?jd(b.last):'—')}${stat('مانده حساب',can('finance.view')?money(balance):'—')}</div>
+      <div class="glass card" style="margin-top:12px"><p dir="ltr" style="text-align:right;margin:0">${esc(x.phone)} ${(x.secondaryPhones||[]).map(esc).join(' · ')}</p><p class="mut" style="margin:6px 0">${esc([x.city,x.address].filter(Boolean).join('، '))}</p><p style="margin:6px 0">${esc(x.notes||'')}</p>${x.assignedTo?`<small class="mut">کارشناس مسئول: ${esc(un(LK,x.assignedTo))}</small>`:''}</div>
+      ${b.top.length?`<div class="glass card" style="margin-top:12px"><h2>کالاهای موردعلاقه</h2>${hbars(Object.fromEntries(b.top))}</div>`:''}
+      ${openF.length?`<div class="glass card" style="margin-top:12px"><h2>پیگیری‌های باز</h2>${openF.slice(0,3).map(y=>ROW.followups(y,LK,1)).join('')}</div>`:''}`,
+    tl:()=>{const ty=['all',...new Set((a.data||[]).map(y=>y.type))],arr=(a.data||[]).filter(y=>PROF.tl==='all'||y.type===PROF.tl);return`<div class="tabs">${ty.map(t=>`<button class="${PROF.tl===t?'on':''}" data-a="ptl" data-id="${t}">${t==='all'?'همه':LBL.ty[t]||t}</button>`).join('')}</div><div class="tl">${arr.map(y=>`<div>${esc(y.title)}<br><small class="mut">${jd(y.createdAt,1)}</small></div>`).join('')||'<div class="state">سابقه‌ای ثبت نشده.</div>'}</div>`},
+    inv:()=>`<div class="glass card"><h2>رفتار خرید</h2><div class="row">${chip(b.n.toLocaleString('fa-IR')+' خرید','ok')} ${b.avg?chip('میانگین فاصله‌ی خرید: '+b.avg.toLocaleString('fa-IR')+' روز'):''} ${b.since!=null?chip(b.since.toLocaleString('fa-IR')+' روز از آخرین خرید','m'):''} ${b.avg&&b.since>b.avg?chip('زمان خرید مجدد رسیده','w'):''}</div>${b.n?'':'<small class="mut">هنوز فاکتور نهایی‌ای ثبت نشده.</small>'}</div><div style="margin-top:10px">${lst(iv.data,y=>ROW.invoices(y,LK,1),'فاکتوری صادر نشده.')}</div>`,
+    req:()=>lst(r.data,y=>ROW.requests(y,LK,1),'درخواستی ثبت نشده.'),calls:()=>lst(k.data,y=>ROW.calls(y,LK,1),'تماسی ثبت نشده.'),fu:()=>lst(f.data,y=>ROW.followups(y,LK,1),'پیگیری‌ای ثبت نشده.'),msg:()=>lst(m.data,y=>ROW.messages(y,LK,1),'پیامی ارسال نشده.')}[PROF.tab]();
+  el.innerHTML=`<div class="row"><button class="ib" data-a="pclose" aria-label="بستن">✕</button><span class="sp"></span>${can('customers.edit')?`<button class="btn s" data-a="ed" data-e="customers" data-id="${id}">${I.edit} ویرایش</button>`:''}${can('customers.delete')?`<button class="btn s d" data-a="rm" data-e="customers" data-id="${id}">${I.del} حذف</button>`:''}</div>
+  <div class="row" style="gap:14px">${av(name(x))}<div><h2 style="margin:0;font-size:19px">${esc(name(x))}</h2>${chip(x.customerGroup||'—')} ${x.city?chip(x.city,'m'):''} ${chip(x.customerType||'—','m')} ${x.status==='inactive'?chip('غیرفعال','m'):chip('فعال','ok')}</div></div>
+  <div class="row"><button class="btn p s" data-a="callc" data-id="${id}">تماس / ارسال قیمت</button><button class="btn s" data-a="newinv" data-id="${id}">پیش‌فاکتور</button><button class="btn s" data-a="newfu" data-id="${id}">پیگیری جدید</button><button class="btn s" data-a="newcall" data-id="${id}">ثبت تماس</button></div>
+  <div class="tabs">${T.map(([k2,l])=>`<button class="${PROF.tab===k2?'on':''}" data-a="ptab" data-id="${k2}">${l}</button>`).join('')}</div>${body}`}
+const refresh=()=>{go();if(PROF.id)drawProfile()};
+
+/* ---------- ناوبری و سربرگ ---------- */
+let page='dashboard',navTok=0;
+const NG=[['dashboard'],['desk','customers','followups','requests','calls'],['invoices','debtors','inventory','products'],['messages','templates','reports'],['users','settings']];
+const NT={dashboard:'داشبورد',desk:'تماس جدید',customers:'مشتریان',followups:'پیگیری‌ها',requests:'درخواست‌های قیمت',calls:'تماس‌ها',invoices:'فاکتورها',debtors:'کارتابل بدهکاران',inventory:'انبار',products:'محصولات',messages:'پیام‌ها',templates:'قالب‌های پیام',reports:'گزارش‌ها',users:'کاربران',settings:'تنظیمات'};
+const NI={dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',desk:'<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/>',customers:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',followups:'<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/>',requests:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>',calls:'<path d="M3 5h18M3 12h18M3 19h18"/>',invoices:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',debtors:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',inventory:'<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>',products:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L2 12V2h10l8.6 8.6a2 2 0 010 2.8z"/><circle cx="7" cy="7" r="1.5"/>',messages:'<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',templates:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/>',reports:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',users:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>'};
+async function drawNav(){
+  const[d,db,lo,us]=await Promise.all([NotificationService.getDue(),CustomerService.getAll({filters:{balance:{gt:0}}}),ProductService.getAll({filters:{low:true}}),UserService.getAll()]),s=Settings.get(),bg={debtors:db.data?.length,followups:d.data?.length,inventory:lo.data?.length};
+  $('#nav').innerHTML=`<div class="brand"><span>آ</span><div>${esc(s.company)}<small>مدیریت مشتری و فروش</small></div></div>`+NG.map(g=>g.filter(k=>k!=='settings'||can('settings.edit')).map(k=>`<button class="nb ${page===k?'on':''}" data-a="go" data-id="${k}">${ic(NI[k])} ${NT[k]}${bg[k]?`<i>${bg[k].toLocaleString('fa-IR')}</i>`:''}</button>`).join('')).filter(Boolean).join('<div class="sep"></div>')+`<div class="me"><label class="f" style="margin-top:0">کاربر فعال (دمو)</label><select data-a="whoami" aria-label="کاربر فعال">${(us.data||[]).map(u=>`<option value="${u.id}" ${u.id===AuthService.user.id?'selected':''}>${esc(u.name)} — ${LBL.role[u.role]}</option>`).join('')}</select></div>`}
+function drawHdr(){const s=Settings.get();$('#hdr').innerHTML=`<div class="gs"><input id="gs" placeholder="جست‌وجوی سریع مشتری (نام یا شماره)..." aria-label="جست‌وجوی سریع" autocomplete="off"><div class="gsr glass" id="gsr"></div></div><span class="mut sp">${jd(now())}</span><button class="ib" data-a="theme" title="روشن / تیره" aria-label="تغییر پوسته">${ic('<circle cx="12" cy="12" r="9"/><path d="M12 3v18"/>')}</button><span class="chip ${s.mode==='api'?'ok':'m'}">${s.mode==='api'?'متصل به سرور':'حالت محلی'}</span>`;
+  let t;$('#gs').oninput=e=>{clearTimeout(t);t=setTimeout(async()=>{const q=e.target.value.trim(),b=$('#gsr');if(!q){b.classList.remove('on');return}const r=await CustomerService.search({search:q,limit:6});b.classList.add('on');b.innerHTML=r.success&&r.data.length?r.data.map(c=>`<div class="li" style="cursor:pointer" data-a="prof" data-id="${c.id}">${av(name(c))}<div class="m">${esc(name(c))} <small dir="ltr">${esc(c.phone)}</small></div></div>`).join(''):'<div class="state">موردی پیدا نشد.</div>'},250)}}
+function applyTheme(){const t=Settings.get().theme;if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=t}
+async function go(p){if(p&&p!==page){page=p;closeProfile();SELC.clear()}const t=++navTok;drawNav();
+  try{await PAGES[page]()}catch(e){if(t!==navTok)return;console.error(e);$('#main').innerHTML=`<div class="glass card state err">خطا در نمایش این صفحه: ${esc(e.message)}<br><button class="btn s" data-a="retry">تلاش دوباره</button></div>`}}
+
+/* ---------- رویدادها ---------- */
+const CSVC={customers:[['نام',x=>name(x)],['موبایل',x=>x.phone],['شهر',x=>x.city],['گروه',x=>x.customerGroup],['مانده',x=>x.balance],['مجموع خرید',x=>x.totalPurchase],['آدرس',x=>x.address]],
+  products:[['نام',x=>x.name],['کد',x=>x.code],['دسته',x=>x.category],['قیمت',x=>x.price],['موجودی',x=>x.stock],['حد هشدار',x=>x.minStock]],
+  invoices:[['شماره',x=>x.finalNo||x.no],['مشتری',(x,cm)=>name(cm.get(x.customerId))],['تاریخ',x=>jd(x.issuedAt)],['وضعیت',x=>LBL.is[x.status]],['پرداخت',x=>LBL.ps[x.payState]],['مبلغ',x=>x.total]]};
+const csv=async e=>{const[r,L]=await Promise.all([SV[e].getAll(),lists()]),cm=mapOf(L.cs),cols=CSVC[e],q=c=>'"'+String(c??'').replace(/"/g,'""')+'"';
+  const t='\ufeff'+[cols.map(c=>c[0]),...(r.data||[]).map(x=>cols.map(c=>c[1](x,cm)))].map(r=>r.map(q).join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download=e+'.csv';a.click()};
+const LOCKED=new Set(),safe=async(fn,id,b)=>{if(!fn||(fn.lock&&LOCKED.has(fn)))return;if(fn.lock)LOCKED.add(fn);try{await fn(id,b)}catch(e){console.error(e);toast('خطای غیرمنتظره: '+(e.message||e))}finally{LOCKED.delete(fn)}};
+const A={
+  go:id=>go(id),retry:()=>go(),pg:id=>PAGE.run(+id),theme:()=>{const s=Settings.get(),dark=document.documentElement.dataset.theme==='dark'||(s.theme==='auto'&&!!window.matchMedia?.('(prefers-color-scheme:dark)').matches);Settings.save({...s,theme:dark?'light':'dark'});applyTheme()},
+  whoami:(id,b)=>{Settings.save({...Settings.get(),meId:b.value});toast('کاربر فعال تغییر کرد');go(page==='settings'&&!can('settings.edit')?'dashboard':page)},
+  ed:(id,b)=>openForm(b.dataset.e,id||null,b.dataset.e==='calls'&&!id?{createdAt:now()}:{}),
+  rm:async(id,b)=>{const e=b.dataset.e;if(!can(e+'.delete'))return toast('دسترسی ندارید');if(e==='customers'){const iv=(await InvoiceService.getAll({filters:{customerId:id}})).data||[],cu=(await CustomerService.getById(id)).data;if(iv.some(isFinal)||cu?.balance>0)return toast('این مشتری فاکتور نهایی یا بدهی دارد و حذف نمی‌شود؛ می‌توانید او را غیرفعال کنید.')}if(e==='invoices'){const i=(await InvoiceService.getById(id)).data;if(!['proforma','canceled'].includes(i?.status))return toast('فاکتور صادرشده قابل حذف نیست؛ ابتدا آن را لغو کنید.')}if(!await ask(e==='customers'?'مشتری و تمام سوابق او (تماس، پیگیری، پیام و سفارش) حذف می‌شود. ادامه می‌دهید؟':'این مورد حذف شود؟'))return;
+    if(await check(e==='customers'?await CustomerService.deleteCascade(id):await SV[e].delete(id),'حذف شد')){if(e==='customers')closeProfile();SELC.delete(id);refresh()}},
+  prof:(id)=>{$('#gsr')?.classList.remove('on');profile(id)},pclose:closeProfile,ptab:id=>{PROF.tab=id;drawProfile()},ptl:id=>{PROF.tl=id;drawProfile()},
+  pickc:async id=>{D.cust=(await CustomerService.getById(id)).data;deskCust();regen(true)},chg:()=>{D.cust=null;deskCust()},newc:()=>openForm('customers',null,{},c=>{if(D.multi)D.group.push(c);else D.cust=c;go('desk')}),
+  mm:(id,b)=>{D.multi=b.checked;if(D.multi){if(D.cust&&!D.group.some(c=>c.id===D.cust.id))D.group=[D.cust,...D.group]}else D.cust=D.group[0]||D.cust;deskCust();regen(true)},
+  gadd:id=>{const c=D.L.cs.find(x=>x.id===id);if(c&&!D.group.some(x=>x.id===id))D.group.push(c);deskCust();regen(true)},
+  grm:id=>{D.group=D.group.filter(c=>c.id!==id);deskCust();regen(true)},gclr:()=>{D.group=[];deskCust();regen(true)},
+  gall:()=>{const ci=$('#gci').value,gr=$('#ggr').value;if(!ci&&!gr)return toast('ابتدا شهر یا گروه را انتخاب کنید');
+    const add=D.L.cs.filter(c=>c.phone&&c.status!=='inactive'&&(!ci||c.city===ci)&&(!gr||c.customerGroup===gr)&&!D.group.some(x=>x.id===c.id));D.group.push(...add);toast(add.length.toLocaleString('fa-IR')+' مشتری اضافه شد');deskCust();regen(true)},
+  bprice:async()=>{const r=await Promise.all([...SELC].map(id=>CustomerService.getById(id)));D.multi=true;D.cust=null;D.group=r.filter(x=>x.success).map(x=>x.data);SELC.clear();go('desk')},
+  tog:id=>{D.sel[id]=D.sel[id]?0:1;deskProducts();regen()},qty:(id,b)=>{D.sel[id]=Math.max(1,+b.value||1);regen()},regen:()=>regen(true),
+  send:async ch=>{const text=$('#msg').value.trim(),tg=targets();if(!text)return toast('ابتدا مشتری یا محصول انتخاب کنید');
+    if(ch==='copy'){await copy(tpl(text,tg[0]||null));return toast('متن کپی شد')}if(!tg.length)return toast('مشتری را انتخاب کنید');
+    const pids=selItems().map(i=>i.productId),one=(c,chn,t,silent)=>MessageService.send({customerId:c.id,phone:c.phone,channel:chn,body:t,productIds:pids,silent});
+    if(tg.length===1){const r=await one(tg[0],ch,tpl(text,tg[0]),false);if(await check(r)){D.sent.add(ch);toast(r.meta.info);drawNav()}return}
+    if(Settings.get().mode==='api'){if(!await ask(`پیام برای ${tg.length.toLocaleString('fa-IR')} مشتری ارسال می‌شود.`,'ارسال'))return;let n=0;for(const c of tg)if((await one(c,ch,tpl(text,c),true)).success)n++;D.sent.add(ch);toast(n.toLocaleString('fa-IR')+' پیام ارسال شد');drawNav();return}
+    sendQueue(tg,ch,text,(c,chn,t)=>one(c,chn,t,false),'ارسال قیمت',()=>{D.sent.add(ch);drawNav()})},
+  savecall:async()=>{const tg=targets();if(!tg.length)return toast('مشتری را انتخاب کنید');const res=$('#res').value.trim();if(!res&&!D.sent.size)return toast('نتیجه‌ی تماس را بنویسید');
+    const it=selItems(),st=$('#oc').value,next=dtVal('nx',1),oc=$('#oc').selectedOptions[0].text,as=$('#as').value;let n=0;
+    for(const c of tg){const r=await CallWorkflow.registerCall({customer:c,items:it,channels:[...D.sent],summary:res||'پیام ارسال شد',outcome:oc,status:st,next,assignee:as});if(r.success)n++}
+    if(!n)return toast('ثبت ناموفق بود');toast(n>1?n.toLocaleString('fa-IR')+' تماس ثبت شد':'تماس ثبت شد');Object.assign(D,{cust:null,group:[],sel:{},sent:new Set(),edited:false});go('desk')},
+  debtc:async id=>{const[c,f,L]=await Promise.all([CustomerService.getById(id),FollowUpService.getAll({filters:{customerId:id,type:'debt',status:'open'},sortBy:'dueAt',sortOrder:'asc'}),lists()]),cu=c.data;
+    mini('نتیجه تماس با '+esc(name(cu)),[{k:'summary',l:'خلاصه‌ی گفتگو',t:'area',req:1},{k:'outcome',l:'وضعیت',t:'sel',opts:['پاسخ نداد','قول پرداخت داد','پرداخت جزئی','تسویه شد'],w:1},{k:'balance',l:'مانده بعد از تماس',t:'num',w:1},{k:'next',l:'پیگیری بعدی',t:'dt'}],{balance:cu.balance,outcome:'قول پرداخت داد'},L,async d=>{
+      if(!await check(await CallWorkflow.registerDebtContact({customer:cu,summary:d.summary,outcome:d.outcome,newBalance:d.balance,next:d.next,followUpId:f.data?.[0]?.id,assignee:AuthService.user.id}),'ثبت شد'))return false;refresh()},'ثبت')},
+  remind:async id=>{const[c,L]=await Promise.all([CustomerService.getById(id),lists()]),cu=c.data,rc=ReminderService.cfg();
+    mini('پیام یادآوری بدهی',[{k:'channel',l:'پیام‌رسان',t:'sel',opts:chOpts()},{k:'body',l:'متن',t:'area',rows:6,req:1}],{channel:rc.channel,body:tpl(await ReminderService.templateBody(),cu)},L,async d=>{const r=await ReminderService.send(cu,d.channel,d.body,false);if(!await check(r,r.meta?.info))return false;refresh()},'ارسال')},
+  dcat:async(id,b)=>{if(await check(await CustomerService.update(id,{debtCategory:b.value}),'دسته‌ی بدهی ذخیره شد'))refresh()},
+  agef:id=>{const S=LS[DEBT_KEY];if(S){S.f.aging=S.f.aging===id?'':id;S.pg=1}go()},
+  remset:async()=>{const L=await lists(),c=ReminderService.cfg();
+    mini('یادآوری خودکار بدهی',[{k:'enabled',l:'فعال‌سازی',t:'check',cl:'یادآوری خودکار فعال باشد (در حالت سرور خودکار ارسال می‌شود؛ در حالت محلی صف ارسال آماده می‌شود)'},{k:'channel',l:'پیام‌رسان انتخابی',t:'sel',opts:chOpts(),w:1},{k:'everyDays',l:'فاصله‌ی تکرار یادآوری (روز)',t:'num',w:1},{k:'minAmount',l:'حداقل مبلغ بدهی (تومان)',t:'num',w:1},{k:'minAge',l:'حداقل سن بدهی (روز)',t:'num',w:1},{k:'hFrom',l:'ساعت شروع ارسال',t:'num',w:1},{k:'hTo',l:'ساعت پایان ارسال',t:'num',w:1},{k:'templateId',l:'قالب پیام',t:'sel',opts:[['','متن پیش‌فرض (پایین)'],...L.ts.map(t=>[t.id,t.title])]},{k:'body',l:'متن پیش‌فرض ({name} {balance} {days} {payinfo} {company})',t:'area',rows:5}],c,L,async d=>{
+      Settings.save({...Settings.get(),reminder:{...c,...d}});toast('ذخیره شد');refresh()},'ذخیره')},
+  remrun:async()=>{const L=await lists(),c=ReminderService.cfg(),hs=SELC.size>0;
+    mini('ارسال یادآوری بدهی',[{k:'scope',l:'گیرندگان',t:'sel',opts:[...(hs?[['sel','فقط انتخاب‌شده‌ها ('+SELC.size.toLocaleString('fa-IR')+')']]:[]),['due','بدهکارانِ موعد یادآوری (طبق فاصله‌ی تنظیم‌شده)'],['all','همه‌ی بدهکاران']]},{k:'channel',l:'پیام‌رسان',t:'sel',opts:chOpts(),w:1},{k:'tp',l:'قالب',t:'sel',opts:[['','متن پیش‌فرض یادآوری'],...L.ts.map(t=>[t.id,t.title])],w:1},{k:'body',l:'متن پیام ({name} {balance} {days} {payinfo} {company})',t:'area',rows:5}],{scope:hs?'sel':'due',channel:c.channel,tp:c.templateId,body:c.body},L,async d=>{
+      const body=d.tp?L.ts.find(t=>t.id===d.tp).body:d.body,debt=(await CustomerService.getAll({filters:{balance:{gt:0}},sortBy:'balance'})).data||[];
+      const list=d.scope==='sel'?debt.filter(x=>SELC.has(x.id)&&x.phone):d.scope==='all'?debt.filter(x=>x.phone&&x.status!=='inactive'):await ReminderService.due();
+      if(!list.length){toast('گیرنده‌ای پیدا نشد');return false}
+      if(Settings.get().mode==='api'){if(!await ask(`یادآوری برای ${list.length.toLocaleString('fa-IR')} مشتری ارسال می‌شود.`,'ارسال'))return false;let n=0;for(const x of list)if((await ReminderService.send(x,d.channel,tpl(body,x),true)).success)n++;toast(n.toLocaleString('fa-IR')+' یادآوری ارسال شد');refresh()}
+      else setTimeout(()=>remindQueue(list,d.channel,body),80)},'شروع')},
+  selall:()=>{document.querySelectorAll('#ls .sc').forEach(c=>{c.checked=true;SELC.add(c.dataset.id)});drawSel()},
+  selclr:()=>{SELC.clear();document.querySelectorAll('#ls .sc').forEach(c=>c.checked=false);drawSel()},
+  sel:(id,b)=>{b.checked?SELC.add(id):SELC.delete(id);drawSel()},
+  bgroup:async()=>{const L=await lists();mini('تغییر گروه',[{k:'g',l:'گروه جدید',t:'sel',opts:GROUPS}],{},L,async d=>{for(const id of SELC)await CustomerService.update(id,{customerGroup:d.g});toast('اعمال شد');SELC.clear();refresh()},'اعمال')},
+  bassign:async()=>{const L=await lists();mini('تخصیص کارشناس',[{k:'u',l:'کارشناس مسئول',t:'user',req:1}],{},L,async d=>{for(const id of SELC)await CustomerService.update(id,{assignedTo:d.u});toast('اعمال شد');SELC.clear();refresh()},'اعمال')},
+  bdcat:async()=>{const L=await lists();mini('دسته‌ی بدهی',[{k:'c',l:'دسته',t:'sel',opts:DEBTCAT}],{},L,async d=>{for(const id of SELC)await CustomerService.update(id,{debtCategory:d.c});toast('اعمال شد');SELC.clear();refresh()},'اعمال')},
+  fdone:async id=>{const[r,L]=await Promise.all([FollowUpService.getById(id),lists()]),fu=r.data;
+    mini('ثبت نتیجه پیگیری',[{k:'result',l:'نتیجه',t:'area',req:1},{k:'next',l:'پیگیری بعدی (اختیاری)',t:'dt'}],{},L,async d=>{if(!await check(await FollowUpService.complete(id,d.result),'ثبت شد'))return false;
+      await log(fu.customerId,'followup','پیگیری انجام شد: '+fu.title+' — '+short(d.result));if(d.next)await FollowUpService.create({customerId:fu.customerId,type:fu.type,title:fu.title,description:'',dueAt:d.next,assignee:fu.assignee,status:'open',result:null,completedAt:null});refresh()},'ثبت')},
+  newfu:id=>openForm('followups',null,{customerId:id,dueAt:new Date(Date.now()+864e5).toISOString(),assignee:AuthService.user.id}),newreq:id=>openForm('requests',null,{customerId:id}),newcall:id=>openForm('calls',null,{customerId:id,createdAt:now()}),
+  callc:async id=>{D.cust=(await CustomerService.getById(id)).data;D.multi=false;D.group=[];D.sel={};D.sent=new Set();closeProfile();go('desk')},
+  rstat:async(id,b)=>{const r=await RequestService.changeStatus(id,b.value);if(await check(r,'وضعیت تغییر کرد')){await log(r.data.customerId,b.value==='ordered'?'order':'request','وضعیت درخواست: '+LBL.rs[b.value]);refresh()}},
+  vmsg:async id=>{const m=(await MessageService0.getById(id)).data;modal('متن پیام',`<p style="white-space:pre-wrap">${esc(m.body)}</p><button class="btn s" data-a="cpy" data-id="${id}">کپی</button>`)},cpy:async id=>{copy((await MessageService0.getById(id)).data.body);toast('کپی شد')},
+  newinv:id=>openForm('invoices',null,{customerId:id}),
+  deskinv:()=>{const tg=targets();if(tg.length!==1)return toast(tg.length?'پیش‌فاکتور برای هر مشتری جداگانه صادر می‌شود؛ فقط یک مشتری انتخاب کنید.':'مشتری را انتخاب کنید');const it=selItems();if(!it.length)return toast('محصولی انتخاب نشده');
+    openForm('invoices',null,{customerId:tg[0].id,items:it.map(({productId,name,price,qty})=>({productId,name,price,qty}))})},
+  req2inv:async id=>{const r=(await RequestService.getById(id)).data;openForm('invoices',null,{customerId:r.customerId,items:r.items})},
+  prn:()=>window.print(),
+  inv:async id=>{const i=(await InvoiceService.getById(id)).data,c=(await CustomerService.getById(i.customerId)).data,fin=isFinal(i),out=Math.max(0,i.total-paidOf(i));
+    modal((fin?'فاکتور نهایی ':'پیش‌فاکتور ')+esc(i.finalNo||i.no),`<div class="row"><b>${esc(name(c))}</b><span class="mut sp">${jd(i.issuedAt)}</span></div><div class="row">${chip(LBL.is[i.status],ISC[i.status])} ${chip(LBL.ps[i.payState]||'',PSC[i.payState])}</div>
+    <table class="tbl"><thead><tr><th>کالا</th><th>تعداد</th><th>فی</th><th>مبلغ</th></tr></thead><tbody>${i.items.map(x=>`<tr><td>${esc(x.name)}</td><td>${x.qty.toLocaleString('fa-IR')}</td><td>${money(x.price)}</td><td>${money(x.price*x.qty)}</td></tr>`).join('')}</tbody></table>
+    <div style="text-align:end;margin-top:10px;line-height:2">جمع: ${money(i.subtotal)}${i.discount?`<br>تخفیف: ${money(i.discount)}`:''}${i.tax?`<br>مالیات: ${money(i.tax)}`:''}<br><b>مبلغ کل: ${money(i.total)}</b>${paidOf(i)?`<br>پرداخت‌شده: ${money(paidOf(i))}`:''}<br>${out?`<b>مانده: ${money(out)}</b>`:chip('تسویه شده','ok')}</div>
+    ${(i.payments||[]).length?`<h2 style="margin-top:12px">واریزها</h2>${i.payments.map(p=>`<div class="li"><div class="m">${chip(p.method,'m')} <small>${jd(p.at,1)}</small></div><b>${money(p.amount)}</b></div>`).join('')}`:''}
+    ${i.note?`<p class="mut">${esc(i.note)}</p>`:''}<div class="row noprint"><button class="btn s" data-a="invsend" data-id="${id}">ارسال برای مشتری</button><button class="btn s" data-a="invst" data-id="${id}">وضعیت و واریز</button><button class="btn s" data-a="prn">چاپ</button></div>`)},
+  invsend:async id=>{const i=(await InvoiceService.getById(id)).data,c=(await CustomerService.getById(i.customerId)).data,L=await lists();
+    mini('ارسال '+(isFinal(i)?'فاکتور نهایی':'پیش‌فاکتور'),[{k:'channel',l:'کانال',t:'sel',opts:Object.entries(Channels).map(([k,v])=>[k,v.label])},{k:'body',l:'متن پیام (قابل ویرایش)',t:'area',rows:11,req:1}],{channel:'sms',body:invoiceText(i,c)},L,async d=>{
+      const r=await MessageService.send({customerId:c.id,phone:c.phone,channel:d.channel,body:d.body,productIds:i.productIds});if(!await check(r,r.meta?.info))return false;await InvoiceService.update(id,{sentAt:now()});refresh()},'ارسال')},
+  invst:async id=>{const i=(await InvoiceService.getById(id)).data,L=await lists(),out=Math.max(0,i.total-paidOf(i));
+    mini('وضعیت و واریز — '+(i.finalNo||i.no),[{k:'status',l:'تغییر وضعیت',t:'sel',opts:[['same','بدون تغییر ('+LBL.is[i.status]+')'],...NEXT[i.status].map(s=>[s,LBL.is[s]])],w:1},{k:'amount',l:'ثبت واریز (مانده '+money(out)+')',t:'num',w:1},{k:'method',l:'روش پرداخت',t:'sel',opts:PM,w:1},{k:'channel',l:'ارسال خودکار برای مشتری',t:'sel',opts:[['','ارسال نشود'],...Object.entries(Channels).map(([k,v])=>[k,v.label])],w:1}],{status:'same',method:PM[0],channel:''},L,async d=>{
+      if(d.status!=='same'){if(!await check(await InvoiceWorkflow.setStatus(id,d.status)))return false}
+      if(d.amount>0&&d.status!=='paid'){if(!await check(await InvoiceWorkflow.addPayment(id,d.amount,d.method)))return false}
+      if(d.channel){const r=await InvoiceWorkflow.send(id,d.channel);if(!await check(r,r.meta?.info))return false}else toast('ثبت شد');refresh()},'ثبت')},
+  stockin:async id=>{const L=await lists();mini('حرکت انبار',[{k:'productId',l:'کالا',t:'prod',req:1},{k:'type',l:'نوع',t:'sel',opts:[['in','ورود کالا (افزایش)'],['out','خروج / ضایعات (کاهش)'],['adjust','اصلاح موجودی (مقدار نهایی)']],w:1},{k:'qty',l:'تعداد',t:'num',w:1},{k:'note',l:'توضیح'}],{productId:id||'',type:'in'},L,async d=>{
+      const p=L.ps.find(x=>x.id===d.productId),delta=d.type==='in'?Math.abs(d.qty):d.type==='out'?-Math.abs(d.qty):d.qty-(p.stock||0);
+      if(!delta){toast('تغییری برای ثبت وجود ندارد');return false}if((p.stock||0)+delta<0){toast('موجودی منفی می‌شود');return false}
+      if(!await check(await StockService.move(p.id,delta,d.type,null,d.note),'ثبت شد'))return false;refresh()},'ثبت')},
+  kardex:async id=>{const[p,m]=await Promise.all([ProductService.getById(id),StockMoveService.getAll({filters:{productId:id}})]);
+    modal('کاردکس — '+esc(p.data.name),(m.data||[]).map(x=>`<div class="li"><div class="m">${chip(LBL.sm[x.type]||x.type,'m')} <small>${jd(x.createdAt,1)}</small>${x.note?' · '+esc(x.note):''}</div>${chip((x.qty>0?'+':'')+x.qty.toLocaleString('fa-IR'),x.qty>0?'ok':'b')}</div>`).join('')||'<div class="state">حرکتی ثبت نشده.</div>')},
+  bulk:async()=>{const L=await lists(),cities=[...new Set(L.cs.map(c=>c.city).filter(Boolean))],cutoff=new Date(Date.now()-60*864e5).toISOString();
+    const S=(id,l,o)=>`<div>${F(l,`<select id="b_${id}">${o.map(([a,b])=>`<option value="${esc(a)}">${esc(b)}</option>`).join('')}</select>`)}</div>`;
+    const rec=()=>{const g=k=>$('#b_'+k).value;let r=L.cs.filter(c=>c.phone&&(g('st')==='all'||c.status!=='inactive'));if(g('sl')==='sel')r=r.filter(c=>SELC.has(c.id));
+      if(g('gr'))r=r.filter(c=>c.customerGroup===g('gr'));if(g('ci'))r=r.filter(c=>c.city===g('ci'));if(g('as'))r=r.filter(c=>c.assignedTo===g('as'));
+      if(g('db')==='d')r=r.filter(c=>c.balance>0);if(g('db')==='c')r=r.filter(c=>!(c.balance>0));
+      if(g('by')==='y')r=r.filter(c=>c.ordersCount>0);if(g('by')==='n')r=r.filter(c=>!c.ordersCount);if(g('by')==='d')r=r.filter(c=>c.ordersCount>0&&c.lastPurchaseAt<cutoff);return r};
+    modal('پیام گروهی',`<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">${S('sl','محدوده',[...(SELC.size?[['sel','فقط انتخاب‌شده‌ها ('+SELC.size.toLocaleString('fa-IR')+')']]:[]),['','بر اساس فیلترهای زیر']])}${S('ci','شهر',[['','همه‌ی شهرها'],...cities.map(c=>[c,c])])}${S('gr','گروه مشتری',[['','همه‌ی گروه‌ها'],...GR])}${S('db','حساب',[['','همه'],['d','بدهکار'],['c','بدون بدهی']])}${S('by','سابقه‌ی خرید',[['','همه'],['y','خریدار'],['n','بدون خرید'],['d','بدون خرید ۶۰ روز اخیر']])}${S('as','کارشناس',[['','همه'],...L.us.map(u=>[u.id,u.name])])}${S('st','وضعیت',[['act','فقط فعال‌ها'],['all','همه']])}${S('ch','کانال',Object.entries(Channels).map(([k,v])=>[k,v.label]))}${S('tp','قالب',[['','بدون قالب'],...L.ts.map(t=>[t.id,t.title])])}<div class="fw">${F('متن پیام ({name} و {balance} جایگزین می‌شوند)','<textarea id="b_body" rows="5"></textarea>')}</div></div><div class="chip" id="b_cnt" style="margin-top:8px"></div>`,async()=>{
+      const text=$('#b_body').value.trim(),to=rec(),ch=$('#b_ch').value;if(!text){toast('متن پیام را بنویسید');return false}if(!to.length){toast('گیرنده‌ای پیدا نشد');return false}
+      if(!await ask(`پیام برای ${to.length.toLocaleString('fa-IR')} مشتری ارسال می‌شود.`,'ارسال'))return false;
+      let n=0;for(const c of to){const r=await MessageService.send({customerId:c.id,phone:c.phone,channel:ch,body:tpl(text,c),silent:true});if(r.success)n++}
+      if(Settings.get().mode!=='api'){if(ch==='sms'){const a=document.createElement('a');a.href='sms:'+to.map(c=>c.phone).join(',')+'?body='+encodeURIComponent(tpl(text,null));a.click()}else await copy(tpl(text,null))}
+      toast(n.toLocaleString('fa-IR')+' پیام ثبت شد');refresh()},'ارسال');
+    const upd=()=>{$('#b_cnt').textContent=rec().length.toLocaleString('fa-IR')+' گیرنده'};document.querySelectorAll('#dlg [id^=b_]').forEach(el=>el.onchange=upd);
+    $('#b_tp').onchange=e=>{const t=L.ts.find(x=>x.id===e.target.value);if(t){$('#b_body').value=t.body}};if(SELC.size)$('#b_sl').value='sel';upd()},
+  csv:(id,b)=>csv(b.dataset.e),
+  saves:()=>{const g=i=>$('#'+i).value.trim();if(g('md')==='api'&&!g('api'))return toast('برای حالت سرور، آدرس API را وارد کنید');Settings.save({...Settings.get(),company:g('co'),phone:g('ph'),payInfo:g('pi'),taxRate:num(g('tx')),theme:g('th'),mode:g('md'),apiBaseUrl:g('api').replace(/\/$/,''),token:g('tk'),deepLinks:{eitaa:g('de'),rubika:g('dr')}});applyTheme();drawHdr();toast('ذخیره شد');go()},
+  exp:()=>{const o={};ENT.forEach(e=>o[e]=StorageAdapter.get(e));o._meta={version:5,at:now()};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}));a.download='arad-crm-backup.json';a.click()},
+  imp:()=>{const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=async()=>{let o;try{o=JSON.parse(await i.files[0].text())}catch(x){return toast('فایل معتبر نیست')}
+    if(!ENT.some(e=>Array.isArray(o[e])))return toast('فایل پشتیبان معتبر نیست');if(!await ask('داده‌های فعلی با محتوای این فایل جایگزین می‌شود.','بازیابی'))return;
+    ENT.forEach(e=>Array.isArray(o[e])&&StorageAdapter.save(e,o[e]));StorageAdapter.save('schema',0);migrate();toast('بازیابی شد');refresh()};i.click()},
+  reset:async()=>{if(await ask('همه‌ی داده‌های فعلی پاک و داده‌ی نمونه جایگزین می‌شود.','بازنشانی')){ENT.forEach(e=>StorageAdapter.save(e,[]));StorageAdapter.save('seeded',0);seed();refresh()}},
+  dpx:(id,b)=>{dpSet(b.closest('.dp').querySelector('input'),'')},
+  dpn:(id,b)=>{const p=b.closest('.pop');let jy=+p.dataset.jy,jm=+p.dataset.jm+(+id);if(jm>12){jm=1;jy++}if(jm<1){jm=12;jy--}p.dataset.jy=jy;p.dataset.jm=jm;p.innerHTML=calHTML(jy,jm,p.closest('.dp').querySelector('input').dataset.iso)},
+  dpd:(id,b)=>{const inp=b.closest('.dp').querySelector('input');closeDP();dpSet(inp,id)}};
+['savecall','send','saves','reset','imp','remrun','bulk'].forEach(k=>{if(A[k])A[k].lock=1});
+document.addEventListener('click',e=>{
+  const di=e.target.closest('input[data-jdp]');if(di){openDP(di);return}
+  if(!e.target.closest('.dp'))closeDP();if(!e.target.closest('.gs'))$('#gsr')?.classList.remove('on');
+  if(e.target.id==='bd'){closeProfile();return}
+  const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a]&&b.tagName!=='SELECT'&&b.type!=='checkbox'&&b.type!=='number'){e.preventDefault();safe(A[b.dataset.a],b.dataset.id,b)}});
+document.addEventListener('change',e=>{const b=e.target;if(!b.dataset.a)return;if(b.dataset.a==='tog'||b.dataset.a==='sel'||b.dataset.a==='mm'||b.tagName==='SELECT'||b.type==='number')safe(A[b.dataset.a],b.dataset.id,b)});
+addEventListener('scroll',closeDP,true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDP();if(PROF.id&&!$('#dlg').open)closeProfile()}if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$('#gs')?.focus()}});
+addEventListener('unhandledrejection',e=>toast('خطا: '+(e.reason?.message||e.reason)));
+
+/* ---------- مهاجرت داده‌های نسخه‌های قبلی ---------- */
+function migrate(){if(StorageAdapter.get('schema',0)>=5)return;let noStock=0;
+  const cs=StorageAdapter.get('customers');cs.forEach(c=>{c.ordersCount=c.ordersCount||0;c.totalPurchase=c.totalPurchase||0;c.lastPurchaseAt=c.lastPurchaseAt||null;c.reminderCount=c.reminderCount||0;c.lastReminderAt=c.lastReminderAt||null;c.debtCategory=c.debtCategory||'';c.city=c.city||'';if(c.balance>0&&!c.debtSince)c.debtSince=c.updatedAt||c.createdAt||now()});
+  StorageAdapter.save('customers',cs);
+  const ps=StorageAdapter.get('products');ps.forEach(p=>{if(p.stock==null){p.stock=0;p.minStock=0;p.low=true;noStock++}else if(p.low==null)p.low=p.stock<=(p.minStock||0)});StorageAdapter.save('products',ps);
+  StorageAdapter.save('schema',5);if(noStock)setTimeout(()=>toast(noStock.toLocaleString('fa-IR')+' محصول موجودی اولیه نداشت؛ از صفحه‌ی «انبار» موجودی را ثبت کنید.'),1500)}
+
+/* ---------- داده‌ی نمونه (حالت محلی، بار اول) ---------- */
+function seed(){if(StorageAdapter.get('seeded',0))return;
+  const base=()=>({createdAt:now(),updatedAt:now(),deletedAt:null}),ago=n=>new Date(Date.now()-n*864e5).toISOString(),nid=()=>uuid();
+  const U=[['مدیر سیستم','admin'],['سارا احمدی','sales'],['علی کریمی','sales'],['بازبین','viewer']].map(([n,r])=>({id:nid(),name:n,role:r,phone:'',...base()}));
+  const P=[['آبلیمو','P-101','ترشیجات',45000,'بطری ۴۵۰ گرمی','آبلیمو طبیعی بدون مواد نگهدارنده. مناسب سالاد و غذا.',400,60],['فلفل سیاه','P-102','ادویه',68000,'بسته ۱۰۰ گرمی','فلفل سیاه آسیاب‌شده با عطر تند.',300,50],['زردچوبه','P-103','ادویه',52000,'بسته ۱۰۰ گرمی','زردچوبه خالص درجه یک.',250,40],['رب گوجه','P-201','کنسرو',38000,'قوطی ۸۰۰ گرمی','رب گوجه‌فرنگی غلیظ.',500,80],['سرکه سیب','P-104','ترشیجات',29000,'بطری ۵۰۰ گرمی','سرکه سیب طبیعی.',150,60]].map(x=>({id:nid(),name:x[0],code:x[1],category:x[2],price:x[3],unit:x[4],description:x[5],stock:x[6],minStock:x[7],low:false,active:true,...base()}));
+  const C=[['آقای هاشمی','','09121234567','عمده','تهران'],['','فروشگاه نور','09351234567','فعال','مشهد'],['خانم رضایی','','09371112233','بالقوه','اصفهان'],['','سوپرمارکت بهار','09124445566','ویژه','تهران'],['آقای کاظمی','','09191237788','قدیمی','شیراز']].map((x,i)=>({id:nid(),firstName:x[0],lastName:'',companyName:x[1],phone:x[2],secondaryPhones:[],customerType:x[1]?'حقوقی':'حقیقی',customerGroup:x[3],city:x[4],status:'active',address:'',notes:'',balance:0,ordersCount:0,totalPurchase:0,lastPurchaseAt:null,debtSince:null,debtCategory:'',lastReminderAt:null,reminderCount:0,assignedTo:U[1+i%2].id,...base(),createdAt:ago(160-i*25)}));
+  const inv=[],mv=[],R=[],K=[],A=[],Fu=[],Ms=[];let n=1000;
+  P.forEach(p=>mv.push({id:nid(),productId:p.id,qty:p.stock,type:'in',ref:null,note:'موجودی اولیه',...base(),createdAt:ago(170)}));
+  const mk=(ci,its,status,d,paid)=>{const items=its.map(([p,q])=>({productId:P[p].id,name:P[p].name,price:P[p].price,qty:q})),total=sum(items),payments=paid?[{id:nid(),amount:paid==='all'?total:paid,method:'کارت به کارت',at:ago(d)}]:[],pd=payments.reduce((s,p)=>s+p.amount,0),fin=['final','delivered'].includes(status),no='PF-'+(++n);
+    const o={id:nid(),no,finalNo:fin?'INV-'+n:null,customerId:C[ci].id,items,productIds:items.map(i=>i.productId),subtotal:total,discount:0,tax:0,dueAt:ago(d-14),total,payments,payState:payStateOf(payments,total),status,note:'',issuedAt:ago(d),finalAt:fin?ago(d):null,sentAt:ago(d),...base(),createdAt:ago(d)};inv.push(o);
+    if(fin){items.forEach(i=>{mv.push({id:nid(),productId:i.productId,qty:-i.qty,type:'out',ref:o.id,note:'فروش '+no,...base(),createdAt:ago(d)});P.find(p=>p.id===i.productId).stock-=i.qty});C[ci].balance+=Math.max(0,total-pd)}
+    A.push({id:nid(),customerId:C[ci].id,type:'invoice',title:(fin?'فاکتور نهایی ':'پیش‌فاکتور ')+(o.finalNo||no)+' — '+money(total),...base(),createdAt:ago(d)})};
+  mk(0,[[0,2],[1,3]],'delivered',90,'all');mk(0,[[0,3],[1,2],[2,1]],'delivered',55,'all');mk(0,[[0,3],[1,3]],'delivered',25,'all');mk(0,[[0,5]],'proforma',2,0);
+  mk(1,[[3,30]],'delivered',70,'all');mk(1,[[3,200],[4,100]],'final',35,0);
+  mk(3,[[1,20]],'delivered',60,'all');mk(3,[[0,40],[2,30]],'final',20,1000000);
+  mk(4,[[2,4]],'delivered',150,'all');mk(2,[[0,2]],'paid',3,'all');
+  P.forEach(p=>p.low=p.stock<=p.minStock);
+  C.forEach(c=>{const f=inv.filter(i=>i.customerId===c.id&&['final','delivered'].includes(i.status)).sort((a,b)=>a.finalAt<b.finalAt?1:-1);c.ordersCount=f.length;c.totalPurchase=f.reduce((s,i)=>s+i.total,0);c.lastPurchaseAt=f[0]?.finalAt||null;c.debtSince=f.filter(i=>i.total>paidOf(i)).sort((a,b)=>a.finalAt>b.finalAt?1:-1)[0]?.finalAt||null});
+  C[1].debtCategory='پیگیری فوری';C[3].debtCategory='قول پرداخت';C[3].lastReminderAt=ago(10);C[3].reminderCount=1;
+  const it0=[{productId:P[0].id,name:P[0].name,price:P[0].price,qty:2},{productId:P[1].id,name:P[1].name,price:P[1].price,qty:1}];
+  R.push({id:nid(),customerId:C[2].id,items:it0,productIds:it0.map(i=>i.productId),amount:sum(it0),status:'priced',note:'قیمت گرفت',date:ago(5),...base(),createdAt:ago(5)});
+  K.push({id:nid(),customerId:C[2].id,kind:'sales',direction:'in',outcome:'قیمت داده شد',summary:'قیمت آبلیمو و فلفل را خواست',...base(),createdAt:ago(5)},{id:nid(),customerId:C[1].id,kind:'debt',direction:'out',outcome:'قول پرداخت داد',summary:'قول داد هفته‌ی آینده تسویه کند',...base(),createdAt:ago(6)});
+  A.push({id:nid(),customerId:C[1].id,type:'debt',title:'تماس تسویه (قول پرداخت داد): قول داد هفته‌ی آینده تسویه کند',...base(),createdAt:ago(6)});
+  const fu=(ci,type,title,due,u,st,res)=>({id:nid(),customerId:C[ci].id,type,title,description:'',dueAt:ago(due),assignee:U[u].id,status:st,result:res||null,completedAt:res?ago(due):null,...base()});
+  Fu.push(fu(1,'debt','پیگیری تسویه حساب',0,1,'open'),fu(3,'debt','پیگیری تسویه حساب',-2,2,'open'),fu(2,'price','ارسال قیمت جدید',2,1,'open'),fu(0,'sales','یادآوری خرید ماهانه',10,2,'done','سفارش جدید ثبت شد'));
+  Ms.push({id:nid(),customerId:C[0].id,channel:'sms',body:'سلام آقای هاشمی عزیز، قیمت‌ها: آبلیمو ۴۵٬۰۰۰ تومان',status:'handoff',productIds:[],...base(),createdAt:ago(25)});
+  const T=[{title:'یادآوری پرداخت',category:'مالی',body:'{name} عزیز، سلام. مانده حساب شما {balance} است. لطفاً جهت تسویه اقدام فرمایید. {company}'},{title:'پیام مناسبتی',category:'تبلیغاتی',body:'{name} عزیز، به مناسبت فرارسیدن ایام جشن، شرایط ویژه‌ی خرید از {company} برای شما فعال شد.'}].map(t=>({id:nid(),...t,...base()}));
+  [['users',U],['products',P],['customers',C],['invoices',inv],['stockmoves',mv],['requests',R],['calls',K],['activities',A],['followups',Fu],['messages',Ms],['templates',T]].forEach(([e,v])=>StorageAdapter.save(e,v));
+  Settings.save({...Settings.get(),meId:U[0].id});StorageAdapter.save('seeded',1)}
+if(Settings.get().mode==='local'){seed();migrate()}applyTheme();drawHdr();go('dashboard');
+setTimeout(()=>ReminderService.tick(),3000);setInterval(()=>ReminderService.tick(),5*60*1000);
+</script>
+</body>
+</html>
